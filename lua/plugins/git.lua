@@ -25,7 +25,7 @@ return {
         -- config = true,
         opts = {},
         keys = {
-            { "n", "<leader>gg", "<cmd>Neogit<cr>", { desc = "Neogit" } },
+            { "<leader>gg", mode = "n", "<cmd>Neogit<cr>", { desc = "Neogit" } },
         },
     },
     {
