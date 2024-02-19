@@ -47,6 +47,11 @@ return {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
+            {"zbirenbaum/copilot-cmp",
+                config = function ()
+                    require("copilot_cmp").setup()
+                end
+            },
             {"L3MON4D3/LuaSnip",
                 opts = {
                     history = true,
@@ -78,6 +83,7 @@ return {
             return {
                 completion = {
                     completeopt = "menu,menuone,noinsert",
+                    max_width = 20,
                 },
                 mapping = cmp.mapping.preset.insert({
                     ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -98,7 +104,8 @@ return {
                 }),
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
-                    { name = "luasnip" } -- Add luasnip as a source
+                    { name = "copilot" },
+                    { name = "luasnip" }, -- Add luasnip as a source
                     { name = "path" },
                 }, {
                         { name = "buffer" },
@@ -108,6 +115,16 @@ return {
                         if icon_kinds[item.kind] then
                             item.kind = string.format('%s [%s]', icon_kinds[item.kind], item.kind)
                         end
+                        -- Adjust trim length for item and content
+                        local trim_length = 30
+                        if item.abbr and #item.abbr > trim_length then
+                            item.abbr = item.abbr:sub(1, trim_length) .. "..."
+                        end
+
+                        if item.menu and #item.menu > trim_length then
+                            item.menu = item.menu:sub(1, trim_length) .. "..."
+                        end
+
                         return item
                     end,
                 },
