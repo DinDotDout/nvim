@@ -30,6 +30,34 @@ return {
     },
     {
         "ThePrimeagen/git-worktree.nvim",
+        -- event = "VeryLazy",
+        lazy = false,
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim",
+        },
+        config = function()
+            local git_worktree = require("git-worktree")
+            git_worktree.setup()
+            local telescope = require("telescope")
+            telescope.load_extension("git_worktree")
+
+            local keymap = vim.keymap.set
+            keymap(
+                "n",
+                "<leader>gw",
+                "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>",
+                { desc = "Git Worktrees" }
+            )
+            keymap(
+                "n",
+                "<leader>gc",
+                "<cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>",
+                {
+                    desc = "Git Create Worktree",
+                }
+            )
+        end,
     },
     {
         "lewis6991/gitsigns.nvim",
