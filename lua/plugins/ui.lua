@@ -69,7 +69,6 @@ return {
             local lualine_require = require("lualine_require")
             lualine_require.require = require
 
-
             vim.o.laststatus = vim.g.lualine_laststatus
 
             return {
@@ -83,7 +82,8 @@ return {
                     lualine_a = { "mode" },
                     lualine_b = { "branch" },
 
-                    lualine_c = {'filename',
+                    lualine_c = {
+                        "filename",
                         {
                             "diagnostics",
                             symbols = {
@@ -116,7 +116,7 @@ return {
                         },
                     },
                     lualine_y = {
-                        { "progress", separator = " ",                  padding = { left = 1, right = 0 } },
+                        { "progress", separator = " ", padding = { left = 1, right = 0 } },
                         { "location", padding = { left = 0, right = 1 } },
                     },
                     lualine_z = {
@@ -183,7 +183,9 @@ return {
                     footer = function()
                         local stats = require("lazy").stats()
                         local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-                        return { "⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms" }
+                        return {
+                            "⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms",
+                        }
                     end,
                 },
             }
@@ -206,5 +208,5 @@ return {
 
             return opts
         end,
-    }
+    },
 }
