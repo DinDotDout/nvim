@@ -1,25 +1,54 @@
 return {
     { -- Smart comments
-        'numToStr/Comment.nvim',
-        opts = {
-        },
-        lazy = false,
-    },
-    { "ThePrimeagen/harpoon",
-        keys = {
-            { "<leader>hh", "<cmd>lua require('harpoon.mark').add}"},
-            -- { "<leader>hh", "<cmd>lua require('harpoon.mark').add}"},
-        },
+        "numToStr/Comment.nvim",
+        -- lazy = false,
+        event = { "BufRead", "BufNewFile", "BufWritePost" },
+        opts = {},
     },
 
-    {  "mbbill/undotree",
+    {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        event = { "BufRead", "BufNewFile", "BufEnter" },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        config = function()
+            local harpoon = require("harpoon")
+            harpoon:setup()
+            local keymap = vim.keymap
+            keymap.set("n", "<leader>a", function()
+                harpoon:list():append()
+            end, { desc = "Mark File (Harpoon)" })
+            keymap.set("n", "<C-e>", function()
+                harpoon.ui:toggle_quick_menu(harpoon:list())
+            end)
+
+            keymap.set("n", "<C-1>", function()
+                harpoon:list():select(1)
+            end, { desc = "Jump to File 1 (Harpoon)" })
+            keymap.set("n", "<C-2>", function()
+                harpoon:list():select(2)
+            end, { desc = "Jump to File 2 (Harpoon)" })
+            keymap.set("n", "<C-3>", function()
+                harpoon:list():select(3)
+            end, { desc = "Jump to File 3 (Harpoon)" })
+            keymap.set("n", "<C-4>", function()
+                harpoon:list():select(4)
+            end, { desc = "Jump to File 4 (Harpoon)" })
+        end,
+    },
+
+    {
+        "mbbill/undotree",
         enabled = true,
         keys = { { "<leader>ut", "<cmd>UndotreeToggle<CR>", desc = "Undotree" } },
     },
+
     {
         "simrat39/symbols-outline.nvim",
         cmd = "SymbolsOutline",
-        keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
+        keys = { { "<leader>cs", "<cmd>SymbolsOutline<CR>", desc = "Symbols Outline" } },
         config = true,
     },
     {
@@ -37,11 +66,16 @@ return {
             },
         },
         keys = {
-            { "<leader>,", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Switch Buffer", },
+            { "<leader>,", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Switch Buffer" },
             { "<leader>/", "<cmd>Telescope live_grep<cr>", desc = "Grep (root dir)" },
             { "<leader>.", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
 
-            { "<leader>sw", "<cmd>Telescope grep_string<cr>" , { word_match = "-w" }, desc = "Word under cursor (root dir)" },
+            {
+                "<leader>sw",
+                "<cmd>Telescope grep_string<cr>",
+                { word_match = "-w" },
+                desc = "Word under cursor (root dir)",
+            },
             { "<leader>sr", "<cmd>Telescope resume<cr>", desc = "Resume" },
             { "<leader>sR", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
             -- search
@@ -53,7 +87,7 @@ return {
         },
         opts = function()
             local actions = require("telescope.actions")
-            local builtin = require('telescope.builtin')
+            local builtin = require("telescope.builtin")
             local find_files_no_ignore = function()
                 local action_state = require("telescope.actions.state")
                 local line = action_state.get_current_line()
@@ -117,7 +151,7 @@ return {
         lazy = false,
         opts = {
             default_file_explorer = true,
-            keymaps={
+            keymaps = {
                 ["<esc>"] = "actions.close",
                 ["<leader>e"] = "actions.close",
                 ["q"] = "actions.close",
@@ -125,7 +159,7 @@ return {
                 ["<C-l>"] = "<cmd>wincmd l<cr>",
             },
         },
-        keys ={ {"<leader>e","<cmd> Oil<CR>", desc = "Open file explorer"}},
+        keys = { { "<leader>e", "<cmd> Oil<CR>", desc = "Open file explorer" } },
     },
     {
         "nvim-pack/nvim-spectre",
