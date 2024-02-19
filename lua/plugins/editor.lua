@@ -66,9 +66,17 @@ return {
             },
         },
         keys = {
+            -- Always show hidden for now, revise when available for live_grep
             { "<leader>,", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Switch Buffer" },
             { "<leader>/", "<cmd>Telescope live_grep<cr>", desc = "Grep (root dir)" },
             { "<leader>.", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
+
+            -- { "<leader>sf", "<cmd>Telescope find_files hidden=true<cr>", desc = "Find Files (hidden)" },
+            -- {
+            --     "<leader>sg",
+            --     "<cmd>Telescope live_grep vimgrep_arguments={'rg', '--hidden', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case'}<cr>",
+            --     desc = "Grep (root dir hidden)",
+            -- },
 
             {
                 "<leader>sw",
@@ -124,7 +132,6 @@ return {
                     end,
                     mappings = {
                         i = {
-                            ["<a-h>"] = find_files_with_hidden,
                             ["<c-q>"] = actions.delete_buffer, -- Close buffer from buff list
                             ["<a-i>"] = find_files_no_ignore,
                             ["<C-Down>"] = actions.cycle_history_next,
@@ -139,6 +146,21 @@ return {
                             ["<c-k>"] = actions.move_selection_previous,
                             ["<C-j>"] = actions.move_selection_next,
                         },
+                    },
+                },
+                pickers = {
+                    find_files = {
+                        hidden = true,
+                    },
+                    grep_string = {
+                        additional_args = function(opts)
+                            return { "--hidden" }
+                        end,
+                    },
+                    live_grep = {
+                        additional_args = function(opts)
+                            return { "--hidden" }
+                        end,
                     },
                 },
             }
