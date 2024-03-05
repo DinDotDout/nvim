@@ -86,6 +86,14 @@ return {
             },
             { "<leader>sr", "<cmd>Telescope resume<cr>", desc = "Resume" },
             { "<leader>sR", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
+            {
+                "<leader>sn",
+                function()
+                    local builtin = require("telescope.builtin")
+                    builtin.find_files({ cwd = vim.fn.stdpath("config") })
+                end,
+                desc = "Nvim dotfiles",
+            },
             -- search
             { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
             { "<leader>sD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },

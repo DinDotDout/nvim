@@ -177,6 +177,15 @@ return {
                         { action = "Telescope find_files",                                     desc = " Find file",       icon = " ", key = "." },
                         { action = "Telescope live_grep",                                      desc = " Find text",       icon = " ", key = "/" },
                         { action = "Telescope oldfiles",                                       desc = " Recent files",    icon = " ", key = "r" },
+                        {
+                            action = function()
+                                local builtin = require("telescope.builtin")
+                                builtin.find_files({ cwd = vim.fn.stdpath("config") })
+                            end,
+                            desc = " Nvim dotfiles",
+                            icon = " ",
+                            key = "n"
+                        },
                         { action = "Lazy",                                                     desc = " Lazy",            icon = "󰒲 ", key = "l" },
                         { action = "qa",                                                       desc = " Quit",            icon = " ", key = "q" },
                     },
