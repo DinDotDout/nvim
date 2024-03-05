@@ -1,9 +1,13 @@
 return {
     { -- Smart comments
         "numToStr/Comment.nvim",
-        -- lazy = false,
-        event = { "BufRead", "BufNewFile", "BufWritePost" },
-        opts = {},
+        -- event = { "BufRead", "BufNewFile", "BufWritePost" },
+        lazy = false,
+        config = function()
+            require("Comment").setup()
+            vim.keymap.set("n", "<C-/>", "gcc", { remap = true })
+            vim.keymap.set("x", "<C-/>", "gb", { remap = true })
+        end,
     },
 
     {
