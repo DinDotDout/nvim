@@ -1,12 +1,15 @@
 return {
+    { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
     { -- Smart comments
         "numToStr/Comment.nvim",
         -- event = { "BufRead", "BufNewFile", "BufWritePost" },
         lazy = false,
         config = function()
             require("Comment").setup()
-            vim.keymap.set("n", "<C-/>", "gcc", { remap = true })
-            vim.keymap.set("x", "<C-/>", "gb", { remap = true })
+            vim.keymap.set("n", "<C-_>", "gcc", { remap = true }, { desc = "Comment Line" }) -- Needed for tmux
+            vim.keymap.set("x", "<C-_>", "gb", { remap = true }, { desc = "Comment Block" }) -- Needed for tmux
+            vim.keymap.set("n", "<C-/>", "gcc", { remap = true }, { desc = "Comment Line" })
+            vim.keymap.set("x", "<C-/>", "gb", { remap = true }, { desc = "Comment Block" })
         end,
     },
 
