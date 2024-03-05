@@ -68,6 +68,11 @@ return {
         keys = {
             -- Always show hidden for now, revise when available for live_grep
             { "<leader>,", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Switch Buffer" },
+            {
+                "<leader><leader>",
+                "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
+                desc = "Switch Buffer",
+            },
             { "<leader>/", "<cmd>Telescope live_grep<cr>", desc = "Grep (root dir)" },
             { "<leader>.", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
 
@@ -227,7 +232,7 @@ return {
         end,
     },
     -- Mostly from lazyvim
-    -- Mostly allows better actions jumping to them when found within n_lines
+    -- Allows better actions jumping to them when found within n_lines
     {
         "echasnovski/mini.ai",
         event = "VeryLazy",
