@@ -1,58 +1,61 @@
 local icon_kinds = {
-    Array         = " ",
-    Boolean       = "󰨙 ",
-    Class         = " ",
-    Codeium       = "󰘦 ",
-    Color         = " ",
-    Control       = " ",
-    Collapsed     = " ",
-    Constant      = "󰏿 ",
-    Constructor   = " ",
-    Copilot       = " ",
-    Enum          = " ",
-    EnumMember    = " ",
-    Event         = " ",
-    Field         = " ",
-    File          = " ",
-    Folder        = " ",
-    Function      = "󰊕 ",
-    Interface     = " ",
-    Key           = " ",
-    Keyword       = " ",
-    Method        = "󰊕 ",
-    Module        = " ",
-    Namespace     = "󰦮 ",
-    Null          = " ",
-    Number        = "󰎠 ",
-    Object        = " ",
-    Operator      = " ",
-    Package       = " ",
-    Property      = " ",
-    Reference     = " ",
-    Snippet       = " ",
-    String        = " ",
-    Struct        = "󰆼 ",
-    TabNine       = "󰏚 ",
-    Text          = " ",
+    Array = " ",
+    Boolean = "󰨙 ",
+    Class = " ",
+    Codeium = "󰘦 ",
+    Color = " ",
+    Control = " ",
+    Collapsed = " ",
+    Constant = "󰏿 ",
+    Constructor = " ",
+    Copilot = " ",
+    Enum = " ",
+    EnumMember = " ",
+    Event = " ",
+    Field = " ",
+    File = " ",
+    Folder = " ",
+    Function = "󰊕 ",
+    Interface = " ",
+    Key = " ",
+    Keyword = " ",
+    Method = "󰊕 ",
+    Module = " ",
+    Namespace = "󰦮 ",
+    Null = " ",
+    Number = "󰎠 ",
+    Object = " ",
+    Operator = " ",
+    Package = " ",
+    Property = " ",
+    Reference = " ",
+    Snippet = " ",
+    String = " ",
+    Struct = "󰆼 ",
+    TabNine = "󰏚 ",
+    Text = " ",
     TypeParameter = " ",
-    Unit          = " ",
-    Value         = " ",
-    Variable      = "󰀫 ",
+    Unit = " ",
+    Value = " ",
+    Variable = "󰀫 ",
 }
 return {
-    {"hrsh7th/nvim-cmp",
+    {
+        "hrsh7th/nvim-cmp",
         version = false, -- last release is way too old
         event = "InsertEnter",
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
-            {"zbirenbaum/copilot-cmp",
-                config = function ()
+            {
+                "zbirenbaum/copilot-cmp",
+                config = function()
                     require("copilot_cmp").setup()
-                end
+                end,
             },
-            {"L3MON4D3/LuaSnip",
+            {
+                "L3MON4D3/LuaSnip",
                 opts = {
                     history = true,
                     delete_check_events = "TextChanged",
@@ -71,7 +74,6 @@ return {
                     { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
                     { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
                 },
-
             },
             "saadparwaiz1/cmp_luasnip", -- Make snippets appear in cmp
             "rafamadriz/friendly-snippets", -- Add friendly-snippets
@@ -92,7 +94,8 @@ return {
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                    -- ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                    ["<C-y>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                     ["<S-CR>"] = cmp.mapping.confirm({
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true,
@@ -108,12 +111,12 @@ return {
                     { name = "luasnip" }, -- Add luasnip as a source
                     { name = "path" },
                 }, {
-                        { name = "buffer" },
-                    }),
+                    { name = "buffer" },
+                }),
                 formatting = {
                     format = function(_, item)
                         if icon_kinds[item.kind] then
-                            item.kind = string.format('%s [%s]', icon_kinds[item.kind], item.kind)
+                            item.kind = string.format("%s [%s]", icon_kinds[item.kind], item.kind)
                         end
                         -- Adjust trim length for item and content
                         local trim_length = 30
@@ -134,9 +137,9 @@ return {
                     },
                 },
                 sorting = defaults.sorting,
-                window ={
+                window = {
                     completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered()
+                    documentation = cmp.config.window.bordered(),
                 },
                 snippet = {
                     expand = function(args)
@@ -155,7 +158,8 @@ return {
             require("luasnip.loaders.from_vscode").lazy_load() -- Load friendly-snippets
         end,
     },
-    {"hrsh7th/cmp-cmdline",
+    {
+        "hrsh7th/cmp-cmdline",
         event = "CmdlineEnter",
         after = "nvim-cmp",
         dependencies = {
@@ -163,24 +167,22 @@ return {
         },
         config = function()
             local cmp = require("cmp")
-            cmp.setup.cmdline({ '/', '?' }, {
+            cmp.setup.cmdline({ "/", "?" }, {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
-                    { name = 'buffer' }
-                }
+                    { name = "buffer" },
+                },
             })
 
             -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-            cmp.setup.cmdline(':', {
+            cmp.setup.cmdline(":", {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = cmp.config.sources({
-                    { name = 'path' }
+                    { name = "path" },
                 }, {
-                        { name = 'cmdline' }
-                    })
+                    { name = "cmdline" },
+                }),
             })
         end,
     },
-
-
 }
