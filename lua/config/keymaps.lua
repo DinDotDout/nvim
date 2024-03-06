@@ -154,3 +154,8 @@ keymap("n", "<C-h>", "<C-w>h", { desc = "Go to left window", remap = true }, opt
 keymap("n", "<C-j>", "<C-w>j", { desc = "Go to lower window", remap = true }, opts)
 keymap("n", "<C-k>", "<C-w>k", { desc = "Go to upper window", remap = true }, opts)
 keymap("n", "<C-l>", "<C-w>l", { desc = "Go to right window", remap = true }, opts)
+
+keymap("t", "<C-h>", "<cmd>wincmd h<cr>", { desc = "Go to left window", remap = true }, opts)
+keymap("t", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go to lower window", remap = true }, opts)
+keymap("t", "<C-k>", "<cmd>wincmd k<cr>", { desc = "Go to upper window", remap = true }, opts)
+keymap("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to right window", remap = true }, opts)
