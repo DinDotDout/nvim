@@ -19,11 +19,12 @@ return {
 
     { -- Shows hex colors
         "norcalli/nvim-colorizer.lua",
-        opts = {},
+        lazy = false,
+        opts = { "rasi", "json", "toml", "yaml", "yml", "lua", "css", "conf" },
     },
 
     {
-        'echasnovski/mini.indentscope',
+        "echasnovski/mini.indentscope",
         opts = {
             symbol = "│",
             -- symbol = "╎",
@@ -32,7 +33,7 @@ return {
     },
 
     {
-        'lukas-reineke/indent-blankline.nvim',
+        "lukas-reineke/indent-blankline.nvim",
         event = { "BufReadPost", "BufWritePost", "BufNewFile" },
         opts = {
             indent = {
