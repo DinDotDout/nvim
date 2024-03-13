@@ -36,6 +36,14 @@ local logo = [[
 
 return {
     {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {},
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+        },
+    },
+    {
         "stevearc/dressing.nvim",
         lazy = true,
         init = function()
@@ -65,7 +73,6 @@ return {
             end
         end,
         opts = function()
-            -- PERF: we don't need this lualine require madness 🤷
             local lualine_require = require("lualine_require")
             lualine_require.require = require
 
@@ -79,7 +86,20 @@ return {
                     disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
                 },
                 sections = {
-                    lualine_a = { "mode" },
+                    lualine_a = {
+                        {
+                            "macro-recording",
+                            fmt = function()
+                                local recording_register = vim.fn.reg_recording()
+                                if recording_register == "" then
+                                    return ""
+                                else
+                                    return "Recording @" .. recording_register
+                                end
+                            end,
+                        },
+                        "mode",
+                    },
                     lualine_b = { "branch" },
 
                     lualine_c = {
