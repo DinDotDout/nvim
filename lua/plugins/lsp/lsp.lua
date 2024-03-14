@@ -1,3 +1,53 @@
+local mason_servers = {
+    clangd = {
+        cmd = { "clangd", "--offset-encoding=utf-16" },
+        on_attach = function(client, bufnr)
+            -- Define the command only if clangd is attached
+            vim.api.nvim_buf_set_keymap(
+                bufnr,
+                "n",
+                "gh",
+                "<cmd>ClangdSwitchSourceHeader<CR>",
+                { noremap = true, silent = true }
+            )
+        end,
+    },
+    html = {},
+    cssls = {},
+    glsl_analyzer = {},
+
+    lua_ls = {
+        settings = {
+            Lua = {
+                runtime = { version = "LuaJIT" },
+                workspace = {
+                    checkThirdParty = false,
+                    -- Tells lua_ls where to find all the Lua files that you have loaded
+                    -- for your neovim configuration.
+                    library = {
+                        "${3rd}/luv/library",
+                        unpack(vim.api.nvim_get_runtime_file("", true)),
+                    },
+                    -- If lua_ls is really slow on your computer, you can try this instead:
+                    -- library = { vim.env.VIMRUNTIME },
+                },
+                completion = {
+                    callSnippet = "Replace",
+                },
+                -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+                -- diagnostics = { disable = { 'missing-fields' } },
+            },
+        },
+    },
+}
+
+local other_servers = {
+    glslls = {
+        -- cmd = { "glslls", "--stdin" },
+        -- single_file_support = true,
+    },
+}
+
 local function defineDiagnosticSigns()
     -- local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
     local signs = { Error = " ", Warn = " ", Hint = "", Info = " " }
@@ -11,8 +61,8 @@ local function keymaps(event)
     local map = function(keys, func, desc)
         vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP " .. desc })
     end
-    map("<leader>cl", "<cmd>LspInfo<cr>", "Info")
-    map("<leader>cf", vim.lsp.buf.format, "Code format")
+    -- map("<leader>cl", "<cmd>LspInfo<cr>", "Info")
+    -- map("<leader>cf", vim.lsp.buf.format, "lsp Code format")
     map("<leader>co", ":LspRestart<CR>", "Restart")
     map("<leader>cr", vim.lsp.buf.rename, "[R]e[n]ame")
     map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
@@ -63,53 +113,18 @@ local function setupMason()
 end
 
 local function setupServers(capabilities)
-    local mason_servers = {
-        clangd = { cmd = { "clangd", "--offset-encoding=utf-16" } },
-        html = {},
-        cssls = {},
-        glsl_analyzer = {},
-
-        lua_ls = {
-            settings = {
-                Lua = {
-                    runtime = { version = "LuaJIT" },
-                    workspace = {
-                        checkThirdParty = false,
-                        -- Tells lua_ls where to find all the Lua files that you have loaded
-                        -- for your neovim configuration.
-                        library = {
-                            "${3rd}/luv/library",
-                            unpack(vim.api.nvim_get_runtime_file("", true)),
-                        },
-                        -- If lua_ls is really slow on your computer, you can try this instead:
-                        -- library = { vim.env.VIMRUNTIME },
-                    },
-                    completion = {
-                        callSnippet = "Replace",
-                    },
-                    -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                    -- diagnostics = { disable = { 'missing-fields' } },
-                },
-            },
-        },
-    }
-
-    local other_servers = {
-        glslls = {
-            -- cmd = { "glslls", "--stdin" },
-            -- single_file_support = true,
-        },
-    }
-
     local ensure_installed = vim.tbl_keys(mason_servers or {})
     -- local ensure_installed = { "clangd", "html", "cssls", "glsl_analyzer", "lua_ls" }
     vim.list_extend(ensure_installed, {
+        "prettier", -- Used to format HTML, CSS, JS, etc.
+        "prettierd", -- Used to format HTML, CSS, JS, etc.
         "stylua", -- Used to format lua code
         "clang-format", -- Used to format C/C++ code
-        "prettier", -- Used to format HTML, CSS, JS, etc.
         "shfmt", -- Used to format shell scripts
         "shellcheck", -- Used to lint shell scripts
         "cpplint",
+        "cmakelint",
+        "cmakelang",
     })
     require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
