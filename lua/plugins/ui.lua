@@ -38,9 +38,29 @@ return {
     {
         "folke/noice.nvim",
         event = "VeryLazy",
-        opts = {},
+        opts = {
+            lsp = {progress = {enabled = false}}, -- leave this to fidget
+            views = {
+                notify = { merge = true},
+                mini = {
+                    position = {
+                        row = 1, -- Notifications top right
+                    },
+                },
+                -- cmdline_popup = {
+                --     position = {
+                --         row = 1, -- Top of the screen
+                --     },
+                -- },
+            },
+        },
         dependencies = {
             "MunifTanjim/nui.nvim",
+            -- "rcarriga/nvim-notify", -- to invasive for now
+        },
+        keys = {
+            { "<leader>ue", mode = "n", "<cmd>Noice errors<cr>", { desc = "Noice errors" } },
+            { "<leader>uc", mode = "n", "<cmd>Noice dismiss<cr>", { desc = "Noice dismiss notifications" } },
         },
     },
     {
