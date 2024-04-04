@@ -51,9 +51,8 @@ keymap("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move down" }, opts)
 keymap("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move up" }, opts)
 
 -- buffers
--- should probably remove and not use bufferline
-keymap("n", "<S-h>", "<cmd>bprevious<CR>", { desc = "Prev buffer" }, opts)
-keymap("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next buffer" }, opts)
+keymap("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Prev buffer" }, opts)
+keymap("n", "<leader>bn", "<cmd>bprevious<CR>", { desc = "Next buffer" }, opts)
 
 -- Clear search with <esc>
 keymap({ "i", "n" }, "<esc>", "<cmd>noh<CR><esc>", { desc = "Escape and clear hlsearch" }, opts)
