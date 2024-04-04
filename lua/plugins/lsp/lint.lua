@@ -10,8 +10,9 @@ return {
 
     lint.linters_by_ft = {
       cpp = { "cpplint" },
-      cmake = { "cmakelint", "cmakelang" },
+      cmake = { "cmakelint"},
       bash = { "shellcheck" },
+
       -- gdscript = { "gdtoolkit" },
     }
 
@@ -23,6 +24,7 @@ return {
         lint.try_lint()
       end,
     })
+
 
     vim.keymap.set("n", "<leader>cl", function()
       lint.try_lint()
