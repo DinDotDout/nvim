@@ -5,13 +5,27 @@ local function augroup(name)
 end
 
 autocmd({ "BufRead", "BufNewFile" }, {
+   pattern = { "*.gdshader"},
+   -- command = "gdshader"
+    callback = function()
+    vim.lsp.start({
+        name = "gdshader-lsp",
+        cmd = {
+            "/home/joan/.local/share/nvim/mason/extra/gdshader-lsp",
+        },
+        capabilities = vim.lsp.protocol.make_client_capabilities(),
+    })
+    end,
+})
+
+autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.comp", "*.vert", "*.frag", "*.ply", "*.lst", "*.obj", "*.gltf", "*.glb" },
     command = "set filetype=glsl",
 })
 
 -- Set commentstring for glsl files
 autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.comp", "*.glsl", "*.vert", "*.frag" },
+    pattern = { "*.gdshader","*.comp", "*.glsl", "*.vert", "*.frag" },
     command = "setlocal commentstring=//%s",
 })
 
