@@ -169,7 +169,7 @@ return {
             }
         end,
     },
-    {
+    --[[ {
         "folke/which-key.nvim",
         event = "VeryLazy",
         opts = {
@@ -196,7 +196,7 @@ return {
             wk.setup(opts)
             wk.register(opts.defaults)
         end,
-    },
+    }, ]]
     {
         "nvimdev/dashboard-nvim",
         event = "VimEnter",
