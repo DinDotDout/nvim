@@ -93,10 +93,23 @@ return {
             textobjects = {
                 move = {
                     enable = true,
-                    goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
-                    goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
-                    goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
-                    goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
+                    goto_next_start = {
+                        ["]f"] = "@function.outer",
+                        ["]c"] = "@class.outer",
+                        ["]a"] = "@parameter.inner",
+                    },
+                    goto_next_end = {
+                        ["]F"] = "@function.outer",
+                        ["]C"] = "@class.outer",
+                    },
+                    goto_previous_start = {
+                        ["[f"] = "@function.outer",
+                        ["[c"] = "@class.outer",
+                    },
+                    goto_previous_end = {
+                        ["[F"] = "@function.outer",
+                        ["[C"] = "@class.outer",
+                    },
                 },
             },
         },
@@ -120,7 +133,7 @@ return {
     -- Show context of the current function
     {
         "nvim-treesitter/nvim-treesitter-context",
-        event = {"BufReadPost", "BufWritePost", "BufNewFile"},
+        event = { "BufReadPost", "BufWritePost", "BufNewFile" },
         enabled = true,
         opts = { mode = "cursor", max_lines = 3 },
     },
