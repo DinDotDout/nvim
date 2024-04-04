@@ -46,6 +46,7 @@ local other_servers = {
         -- cmd = { "glslls", "--stdin" },
         -- single_file_support = true,
     },
+    gdscript = {},
 }
 
 local function defineDiagnosticSigns()
