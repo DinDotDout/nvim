@@ -16,7 +16,7 @@ return {
         css = { { "prettierd", "prettier" } },
         scss = { { "prettierd", "prettier" } },
         bash = { "shfmt" },
-        -- gdscript = { "gdtoolkit" },
+        gdscript = { "gdformat" },
         cmake = { "cmakelang" },
         cpp = { "clang-format" },
       },
