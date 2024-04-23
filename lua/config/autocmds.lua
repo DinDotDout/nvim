@@ -5,29 +5,34 @@ local function augroup(name)
 end
 
 autocmd({ "BufRead", "BufNewFile" }, {
-   pattern = { "*.gdshader"},
-   -- command = "gdshader"
+    pattern = { "*.gdshader", "*.gdshaderinc" },
     callback = function()
-    vim.lsp.start({
-        name = "gdshader-lsp",
-        cmd = {
-            "/home/joan/.local/share/nvim/mason/extra/gdshader-lsp",
-        },
-        capabilities = vim.lsp.protocol.make_client_capabilities(),
-    })
+        -- vim.lsp.start({
+        --     name = "gdshader-lsp",
+        --     cmd = {
+        --         "/home/joan/.local/share/nvim/mason/extra/gdshader-lsp",
+        --     },
+        --     capabilities = vim.lsp.protocol.make_client_capabilities(),
+        -- })
+        vim.cmd("set filetype=gdshader")
+        vim.cmd("setlocal commentstring=//%s")
     end,
 })
 
 autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.comp", "*.vert", "*.frag", "*.ply", "*.lst", "*.obj", "*.gltf", "*.glb" },
-    command = "set filetype=glsl",
+    pattern = { ".glsl", "*.comp", "*.vert", "*.frag", "*.ply", "*.lst", "*.obj", "*.gltf", "*.glb" },
+    callback = function()
+        vim.cmd("set filetype=glsl")
+        vim.cmd("setlocal commentstring=//%s")
+    end,
 })
 
--- Set commentstring for glsl files
-autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.gdshader","*.comp", "*.glsl", "*.vert", "*.frag" },
-    command = "setlocal commentstring=//%s",
-})
+-- -- Set commentstring for glsl files
+-- autocmd({ "BufRead", "BufNewFile" }, {
+--     pattern = { "*.gdshader", "*.gdshaderinc", "*.comp", "*.glsl", "*.vert", "*.frag" },
+--     command = "setlocal commentstring=//%s",
+-- })
+
 
 -- Autocmd for lualine
 vim.api.nvim_create_autocmd("RecordingEnter", {
