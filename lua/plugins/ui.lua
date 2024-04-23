@@ -56,7 +56,7 @@ return {
         },
         dependencies = {
             "MunifTanjim/nui.nvim",
-            -- "rcarriga/nvim-notify", -- to invasive for now
+            -- "rcarriga/nvim-notify", -- too invasive for now
         },
         keys = {
             { "<leader>ue", mode = "n", "<cmd>Noice errors<cr>", { desc = "Noice errors" } },

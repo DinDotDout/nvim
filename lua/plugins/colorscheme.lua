@@ -5,21 +5,21 @@ return {
         lazy = false,
         priority = 1000,
         config = function()
-            vim.cmd[[colorscheme gruvbox]]
-        end
+            vim.cmd([[colorscheme gruvbox]])
+        end,
     },
     -- Colorschemes
     -- {
     --     "sainnhe/everforest",
     --     name = "everforest",
-        -- lazy = false,
-        -- priority = 1000,
-        -- config = function()
-        --     vim.g.everforest_background = "hard"
-        --     vim.g.background = "hard"
-        --
-        --     vim.cmd[[colorscheme everforest]]
-        -- end
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function()
+    --     vim.g.everforest_background = "hard"
+    --     vim.g.background = "hard"
+    --
+    --     vim.cmd[[colorscheme everforest]]
+    -- end
     -- },
     -- {
     --     "catppuccin/nvim",
