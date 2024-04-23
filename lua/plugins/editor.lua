@@ -239,21 +239,22 @@ return {
                         },
                     },
                 },
-                pickers = {
-                    find_files = {
-                        hidden = true,
-                    },
-                    grep_string = {
-                        additional_args = function(opts)
-                            return { "--hidden" }
-                        end,
-                    },
-                    live_grep = {
-                        additional_args = function(opts)
-                            return { "--hidden" }
-                        end,
-                    },
-                },
+                -- Hidden files included
+                -- pickers = {
+                --     find_files = {
+                --         -- hidden = true,
+                --     },
+                --     grep_string = {
+                --         additional_args = function(opts)
+                --             -- return { "--hidden" }
+                --         end,
+                --     },
+                --     live_grep = {
+                --         additional_args = function(opts)
+                --             -- return { "--hidden" }
+                --         end,
+                --     },
+                -- },
             }
         end,
     },
