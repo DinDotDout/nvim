@@ -77,7 +77,7 @@ return {
             harpoon:setup()
             local keymap = vim.keymap
             keymap.set("n", "<leader>a", function()
-                harpoon:list():append()
+                harpoon:list():add()
             end, { desc = "Mark File (Harpoon)" })
             keymap.set("n", "<C-e>", function()
                 harpoon.ui:toggle_quick_menu(harpoon:list())
@@ -108,6 +108,9 @@ return {
             keymap.set("n", "<C-v>", function()
                 harpoon:list():select(4)
             end, { desc = "Jump to File 4 (Harpoon)" })
+            -- -- Toggle previous & next buffers stored within Harpoon list
+            -- vim.keymap.set("n", "<C-P>", function() harpoon:list():prev() end)
+            -- vim.keymap.set("n", "<C-N>", function() harpoon:list():next() end)
         end,
     },
 
