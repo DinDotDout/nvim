@@ -91,7 +91,7 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
 -- lazy
-keymap("n", "<leader>l", "<cmd>Lazy<CR>", { desc = "Lazy" }, opts)
+-- keymap("n", "<leader>l", "<cmd>Lazy<CR>", { desc = "Lazy" }, opts)
 
 -- new file
 keymap("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New File" }, opts)
