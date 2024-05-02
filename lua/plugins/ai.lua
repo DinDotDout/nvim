@@ -35,46 +35,51 @@ return {
         event = "VeryLazy",
         keys = {
             {
-                "<leader>ct",
+                "<leader>at",
                 ":CopilotChatToggle<cr>",
-                mode = {"n"},
-                desc = "CopilotChat - Run in-place code",
+                mode = { "n" },
+                desc = "CopilotChat - Toggle",
             },
-            -- lazy.nvim keys
-
-            -- TODO: Add prompt for search grep in Telescope
-            -- Quick chat with Copilot
             {
-                "<leader>cc",
-                mode = {"n", "v", "x"},
+                "<leader>am",
+                ":CopilotChatCommitStaged<cr>",
+                mode = { "n" },
+                desc = "CopilotChat - Write commit message",
+            },
+            {
+                "<leader>ac",
+                mode = { "n", "v", "x" },
                 function()
                     local input = vim.fn.input("Quick Chat: ")
                     if input ~= "" then
-                        require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+                        if vim.fn.mode() == "v" or vim.fn.mode() == "V" or vim.fn.mode() == "^V" then
+                            require("CopilotChat").ask(input, { selection = require("CopilotChat.select").visual  })
+                        else
+                            require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
+                        end
                     end
                 end,
                 desc = "CopilotChat - Quick chat",
             },
-            -- lazy.nvim keys
 
             -- Show help actions with telescope
-            -- {
-            --     "<leader>cch",
-            --     function()
-            --         local actions = require("CopilotChat.actions")
-            --         require("CopilotChat.integrations.telescope").pick(actions.help_actions())
-            --     end,
-            --     desc = "CopilotChat - Help actions",
-            -- },
-            -- -- Show prompts actions with telescope
-            -- {
-            --     "<leader>ccp",
-            --     function()
-            --         local actions = require("CopilotChat.actions")
-            --         require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-            --     end,
-            --     desc = "CopilotChat - Prompt actions",
-            -- },
+            {
+                "<leader>ah",
+                function()
+                    local actions = require("CopilotChat.actions")
+                    require("CopilotChat.integrations.telescope").pick(actions.help_actions())
+                end,
+                desc = "CopilotChat - Help actions",
+            },
+            -- Show prompts actions with telescope
+            {
+                "<leader>aa",
+                function()
+                    local actions = require("CopilotChat.actions")
+                    require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
+                end,
+                desc = "CopilotChat - Prompt actions",
+            },
         },
     },
 }
