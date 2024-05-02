@@ -62,11 +62,16 @@ opt.wrap = false -- Disable line wrap
 opt.fillchars = {
     foldopen = "",
     foldclose = "",
-    -- fold = "⸱",
-    fold = " ",
-    foldsep = " ",
     diff = "╱",
-    eob = " ",
+    fold = "·",
+    foldsep = "│",
+    eob = "~",
+}
+
+vim.opt.listchars = {
+    eol = "↲",  -- Unicode character for a downwards arrow with corner leftwards
+    tab = "> ",  -- Character for tab
+    trail = "~",  -- Character for trailing spaces
 }
 
 if vim.fn.has("nvim-0.10") == 1 then
