@@ -15,7 +15,10 @@ return {
     --         -- { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     --     },
     -- },
-    {"ThePrimeagen/vim-be-good"},
+    {
+        "ThePrimeagen/vim-be-good",
+        lazy = true,
+    },
     {
         "preservim/vim-pencil",
         keys = { { "<leader>n", "<cmd>TogglePencil<CR>", desc = "Pencil mode" } },
@@ -44,7 +47,6 @@ return {
         "echasnovski/mini.indentscope",
         opts = {
             symbol = "│",
-            -- symbol = "╎",
             options = { try_as_border = true },
         },
     },
