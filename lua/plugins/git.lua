@@ -9,7 +9,26 @@ return {
                 "sindrets/diffview.nvim",
                 config = function()
                     local diffview = require("diffview")
-                    diffview.setup()
+                    diffview.setup({
+                        keymaps = {
+                            view = {
+                                {
+                                    { "n", "v" },
+                                    "<leader>e",
+                                    "<Cmd>DiffviewToggleFiles<CR>",
+                                    { silent = true },
+                                },
+                            },
+                            file_panel = {
+                                {
+                                    { "n", "v" },
+                                    "<leader>e",
+                                    "<Cmd>DiffviewToggleFiles<CR>",
+                                    { silent = true },
+                                },
+                            },
+                        },
+                    })
 
                     local keymap = vim.keymap.set
                     keymap("n", "<leader>gd", function()
