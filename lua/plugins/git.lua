@@ -43,8 +43,7 @@ return {
                             view_opened = function(view)
                                 vim.cmd("DiffviewToggleFiles")
                             end,
-                        }
-
+                        },
                     })
 
                     local keymap = vim.keymap.set
@@ -128,6 +127,14 @@ return {
                     gs.blame_line({ full = true })
                 end, "Blame Line")
             end,
+            signs = {
+                add = { text = "" }, -- nf-fa-plus
+                change = { text = "" }, -- nf-fa-pencil
+                delete = { text = "" }, -- nf-fa-minus
+                topdelete = { text = " " }, -- nf-fa-minus
+                changedelete = { text = " " }, -- nf-fa-pencil
+                untracked = { text = " " }, -- nf-fa-question
+            },
         },
     },
 }
