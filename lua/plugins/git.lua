@@ -9,13 +9,24 @@ return {
                 "sindrets/diffview.nvim",
                 config = function()
                     local diffview = require("diffview")
+                    local actions = require("diffview.actions")
                     diffview.setup({
                         keymaps = {
                             view = {
                                 {
                                     { "n", "v" },
                                     "<leader>e",
-                                    "<Cmd>DiffviewToggleFiles<CR>",
+                                    actions.toggle_files,
+                                    { silent = true },
+                                    -- "<Cmd>DiffviewToggleFiles<CR>",
+                                    -- { silent = true },
+                                },
+                            },
+                            file_history_panel = {
+                                {
+                                    { "n", "v" },
+                                    "<leader>e",
+                                    actions.toggle_files,
                                     { silent = true },
                                 },
                             },
@@ -23,11 +34,17 @@ return {
                                 {
                                     { "n", "v" },
                                     "<leader>e",
-                                    "<Cmd>DiffviewToggleFiles<CR>",
+                                    actions.toggle_files,
                                     { silent = true },
                                 },
                             },
                         },
+                        hooks = {
+                            view_opened = function(view)
+                                vim.cmd("DiffviewToggleFiles")
+                            end,
+                        }
+
                     })
 
                     local keymap = vim.keymap.set
