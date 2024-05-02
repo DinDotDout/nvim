@@ -39,9 +39,9 @@ return {
         "folke/noice.nvim",
         event = "VeryLazy",
         opts = {
-            lsp = {progress = {enabled = false}}, -- leave this to fidget
+            lsp = { progress = { enabled = false } }, -- leave this to fidget
             views = {
-                notify = { merge = true},
+                notify = { merge = true },
                 mini = {
                     position = {
                         row = 1, -- Notifications top right
@@ -169,7 +169,7 @@ return {
             }
         end,
     },
-    --[[ {
+    {
         "folke/which-key.nvim",
         event = "VeryLazy",
         opts = {
@@ -180,11 +180,9 @@ return {
                 -- ["gs"] = { name = "+surround" },
                 ["]"] = { name = "+next" },
                 ["["] = { name = "+prev" },
-                ["<leader><tab>"] = { name = "+tabs" },
-                -- ["<leader>b"] = { name = "+buffer" },
+                -- ["<leader><tab>"] = { name = "+tabs" },
                 ["<leader>c"] = { name = "+code" },
-                ["<leader>f"] = { name = "+file/find" },
-                ["<leader>g"] = { name = "+git" },
+                ["<leader>f"] = { name = "+file" },
                 ["<leader>s"] = { name = "+search" },
                 ["<leader>u"] = { name = "+ui" },
                 ["<leader>w"] = { name = "+windows" },
@@ -196,7 +194,7 @@ return {
             wk.setup(opts)
             wk.register(opts.defaults)
         end,
-    }, ]]
+    },
     {
         "nvimdev/dashboard-nvim",
         event = "VimEnter",
@@ -216,6 +214,7 @@ return {
                     center = {
                         { action = "Telescope find_files",                                     desc = " Find file",       icon = " ", key = "." },
                         { action = "Telescope live_grep",                                      desc = " Find text",       icon = " ", key = "/" },
+                        { action = "Neogit",                                                   desc = " Neogit",          icon = "󰊢 ", key = "g" },
                         { action = "Telescope oldfiles",                                       desc = " Recent files",    icon = " ", key = "r" },
                         {
                             action = function()
