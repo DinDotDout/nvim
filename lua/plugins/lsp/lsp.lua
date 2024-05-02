@@ -78,7 +78,7 @@ local function keymaps(event)
     map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
     map("K", vim.lsp.buf.hover, "Hover Documentation")
 
-    map("<c-K>", vim.lsp.buf.signature_help, "Signature help") -- show
+    map("<C-S-K>", vim.lsp.buf.signature_help, "Signature help") -- show
     map("<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", "Type [D]efinition")
 
     -- The following two autocommands are used to highlight references of the
