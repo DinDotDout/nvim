@@ -38,6 +38,26 @@ return {
                             vim.cmd("DiffviewClose")
                         end
                     end, { desc = "Diffview Toggle" })
+                    keymap("n", "<leader>gs", function()
+                        require("telescope.builtin").git_branches({
+                            attach_mappings = function(_, map)
+                                map("i", "<CR>", function(prompt_bufnr)
+                                    local selection =
+                                        require("telescope.actions.state").get_selected_entry(prompt_bufnr)
+                                    require("telescope.actions").close(prompt_bufnr)
+                                    vim.cmd("DiffviewOpen " .. selection.value)
+                                end)
+                                return true
+                            end,
+                        })
+                    end, { desc = "Diffview Branch" })
+                    keymap("n", "<leader>gh", function()
+                        if next(require("diffview.lib").views) == nil then
+                            vim.cmd("DiffviewFileHistory %")
+                        else
+                            vim.cmd("DiffviewClose")
+                        end
+                    end, { desc = "DiffviewFileHistory Toggle" })
                 end,
             },
         },
