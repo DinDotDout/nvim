@@ -137,7 +137,9 @@ keymap("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" }, opts)
 -- quit
 keymap("n", "<leader>Q", "<cmd>confirm qall<CR>", { desc = "Quit all" }, opts)
 keymap("n", "<leader>q", "<cmd>quit<CR>", { desc = "Close window/Quit", noremap = true, silent = true }, opts)
-keymap("n", "<leader>bd", "<cmd>bd<Cr>", { desc = "Delete buffer", remap = true }, opts)
+-- keymap("n", "<leader>bd", "<cmd>bd<Cr>", { desc = "Delete buffer", remap = true }, opts)
+keymap("n", "<leader>bd", "<cmd>bnext | bd #<Cr>", { desc = "Delete buffer", remap = true }, opts)
+-- keymap("n", "<leader>bd", "<cmd>if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) > 1 | bnext | endif | bd #<Cr>", { desc = "Delete buffer", remap = true }, opts)
 
 keymap("n", "-", "<C-W>s", { desc = "Split window down", remap = true }, opts)
 keymap("n", "\\", "<C-W>v", { desc = "Split window right", remap = true }, opts)
