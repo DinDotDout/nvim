@@ -48,7 +48,6 @@ return {
     },
     {
         "stevearc/oil.nvim",
-        -- Optional dependencies
         dependencies = { "nvim-tree/nvim-web-devicons" },
         lazy = false,
         opts = {
@@ -61,7 +60,7 @@ return {
                 ["<C-l>"] = "<cmd>wincmd l<cr>",
             },
         },
-        keys = { { "<leader>e", "<cmd> Oil<CR>", desc = "Open file explorer" } },
+        keys = { { "<leader>e", "<cmd>Oil<CR>", desc = "Open file explorer" } },
     },
     {
         "nvim-telescope/telescope.nvim",

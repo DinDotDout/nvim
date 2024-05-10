@@ -41,7 +41,12 @@ return {
                 vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]]),
                 vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]]),
                 vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]]),
-                vim.keymap.set("n", "<leader>cx", '<cmd>TermExec cmd="./build.sh"<cr>', { desc = "Toggleterm build.sh" }),
+                vim.keymap.set(
+                    "n",
+                    "<leader>cx",
+                    '<cmd>TermExec cmd="./build.sh"<cr>',
+                    { desc = "Toggleterm build.sh" }
+                ),
                 --   -- vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
             })
         end,
@@ -86,7 +91,6 @@ return {
     --     keys = { { "<leader>ss", function()     require("spectre").open()
     --     end, desc = "Replace in files (Spectre)" },},
     -- },
-
 
     -- Mostly from lazyvim
     -- Allows better actions jumping to them when found within n_lines
@@ -164,8 +168,16 @@ return {
     {
         "folke/flash.nvim",
         event = "VeryLazy",
-        ---@type Flash.Config
-        opts = {},
+        opts = {
+            modes = {
+                search = {
+                    enabled = false,
+                },
+                char = {
+                    multi_line = false,
+                },
+            },
+        },
         -- stylua: ignore
         keys = {
             { "s", mode = { "n", "x", "o" }, function()     require("flash").jump()
