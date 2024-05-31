@@ -51,6 +51,9 @@ return {
         dependencies = { "nvim-tree/nvim-web-devicons" },
         lazy = false,
         opts = {
+            view_options = {
+                show_hidden = true,
+            },
             default_file_explorer = true,
             keymaps = {
                 ["<esc>"] = "actions.close",
