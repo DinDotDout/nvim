@@ -11,11 +11,6 @@ return {
             })
         end,
     },
-
-    -- {
-    -- "zbirenbaum/copilot-cmp",
-    -- opts ={},
-    -- },
     {
         "CopilotC-Nvim/CopilotChat.nvim",
         branch = "canary",
