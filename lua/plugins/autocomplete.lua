@@ -54,6 +54,7 @@ return {
                     require("copilot_cmp").setup()
                 end,
             },
+            { "micangl/cmp-vimtex" },
             {
                 "L3MON4D3/LuaSnip",
                 opts = {

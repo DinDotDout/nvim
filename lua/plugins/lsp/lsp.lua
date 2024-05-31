@@ -126,6 +126,8 @@ local function setupServers(capabilities)
         "cpplint",
         "cmakelint",
         "cmakelang",
+        "latexindent",
+        "vale",
     })
     require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

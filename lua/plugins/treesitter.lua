@@ -81,6 +81,7 @@ return {
                 "glsl",
                 "css",
                 "rust",
+                "latex",
             },
             incremental_selection = {
                 enable = true,
