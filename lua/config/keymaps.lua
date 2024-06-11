@@ -10,6 +10,9 @@ keymap("n", "<leader>", "<nop>", opts) -- Unmap leader
 keymap("n", "Q", "@qj", { desc = "Execute 'q' macro and jump down" }, opts) -- Execute macro and jump down
 keymap("x", "Q", ":norm @q<CR>", { desc = "Execute 'q' macro on selection" }, opts) -- Execute macro on selection
 
+keymap("n", "<leader>lr", "<cmd>.lua<CR>", { desc = "Execute the current line" })
+keymap("n", "<leader>lR", "<cmd>source %<CR>", { desc = "Execute the current file" })
+
 keymap({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete no copying" }, opts)
 
 -- Replacement commands
@@ -96,7 +99,7 @@ keymap("v", ">", ">gv", opts)
 -- new file
 keymap("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New File" }, opts)
 
-keymap("n", "<leader>xq", "<cmd>copen<CR>", { desc = "Quickfix List" }, opts)
+keymap("n", "<leader>cq", "<cmd>copen<CR>", { desc = "Quickfix List" }, opts)
 
 keymap("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" }, opts)
 keymap("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" }, opts)
