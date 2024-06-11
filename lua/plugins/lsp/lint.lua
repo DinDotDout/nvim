@@ -8,7 +8,7 @@ return {
         local lint = require("lint")
 
         lint.linters_by_ft = {
-            cpp = { "cpplint" },
+            -- cpp = { "cpplint" },
             cmake = { "cmakelint" },
             bash = { "shellcheck" },
             gdscript = { "gdlint" },
@@ -23,8 +23,8 @@ return {
             end,
         })
 
-        vim.keymap.set("n", "<leader>cl", function()
-            lint.try_lint()
-        end, { desc = "Trigger linting for current file" })
+        -- vim.keymap.set("n", "<leader>cl", function()
+        --     lint.try_lint()
+        -- end, { desc = "Trigger linting for current file" })
     end,
 }
