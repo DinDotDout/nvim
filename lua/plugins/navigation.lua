@@ -171,6 +171,7 @@ return {
                             ["<a-i>"] = find_files_no_ignore,
                             ["<C-Down>"] = actions.cycle_history_next,
                             ["<C-Up>"] = actions.cycle_history_prev,
+                            ["<C-ESC>"] = actions.close,
 
                             ["<C-f>"] = actions.preview_scrolling_down,
                             ["<C-b>"] = actions.preview_scrolling_up,
@@ -180,6 +181,7 @@ return {
                         n = {
                             ["<c-d>"] = actions.delete_buffer, -- Close buffer from buff list
                             ["q"] = actions.close,
+                            ["<C-ESC>"] = actions.close,
                             -- ["<c-k>"] = actions.move_selection_previous,
                             -- ["<C-j>"] = actions.move_selection_next,
                         },
