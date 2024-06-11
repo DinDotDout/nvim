@@ -111,7 +111,6 @@ return {
                     f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, {}),
                     -- Class
                     c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
-                    -- a = ai.gen_spec.treesitter({ a = "@parameter.outer", i = "@parameter.inner" }, {}),
                     t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },
                 },
             }
@@ -155,11 +154,6 @@ return {
                     i[key] = vim.tbl_extend("force", { name = "Inside " .. name .. " textobject" }, ic)
                     a[key] = vim.tbl_extend("force", { name = "Around " .. name .. " textobject" }, ac)
                 end
-                --[[ require("which-key").register({
-        mode = { "o", "x" },
-        i = i,
-        a = a,
-        }) ]]
             end
             set_keymaps()
         end,
@@ -184,8 +178,8 @@ return {
             end, desc = "Flash" },
             { "S", mode = { "n", "x", "o" }, function()     require("flash").treesitter()
             end, desc = "Flash Treesitter" },
-            { "r", mode = "o", function()     require("flash").remote()
-            end, desc = "Remote Flash" },
+            -- { "r", mode = "o", function()     require("flash").remote()
+            -- end, desc = "Remote Flash" },
             -- { "R", mode = { "o", "x" }, function()     require("flash").treesitter_search()
             -- end, desc = "Treesitter Search" },
             -- { "<c-s>", mode = { "c" }, function()     require("flash").toggle()
