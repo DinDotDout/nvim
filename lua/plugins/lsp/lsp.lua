@@ -64,8 +64,9 @@ local function keymaps(event)
     end
     -- map("<leader>cl", "<cmd>LspInfo<cr>", "Info")
     -- map("<leader>cf", vim.lsp.buf.format, "lsp Code format")
-    map("<leader>co", ":LspRestart<CR>", "Restart")
-    map("<leader>cr", vim.lsp.buf.rename, "[R]e[n]ame")
+    -- map("<leader>co", ":LspRestart<CR>", "Restart")
+    -- map("<leader>cr", vim.lsp.buf.rename, "[R]e[n]ame")
+    map("cr", vim.lsp.buf.rename, "[R]e[n]ame")
     map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
     map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
@@ -78,7 +79,7 @@ local function keymaps(event)
     map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
     map("K", vim.lsp.buf.hover, "Hover Documentation")
 
-    map("<C-S-K>", vim.lsp.buf.signature_help, "Signature help") -- show
+    map("<C-S-k>", vim.lsp.buf.signature_help, "Signature help") -- show
     map("<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", "Type [D]efinition")
 
     -- The following two autocommands are used to highlight references of the
