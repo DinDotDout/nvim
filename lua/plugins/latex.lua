@@ -1,8 +1,8 @@
 return {
   "lervag/vimtex",
-  init = function()
+  config = function()
     vim.g['vimtex_view_method'] = 'zathura'     -- main variant with xdotool (requires X11; not compatible with wayland)
-    vim.g['maplocalleader'] = " "
+    -- vim.g['maplocalleader'] = " "
     -- vim.g['vimtex_format_enabled'] = 1
     -- vim.g['vimtex_view_method'] = 'zathura_simple' -- for variant without xdotool to avoid errors in wayland
     -- vim.g['vimtex_quickfix_mode'] = 0              -- suppress error reporting on save and build
