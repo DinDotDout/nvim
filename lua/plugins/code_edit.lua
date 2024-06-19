@@ -1,3 +1,10 @@
+local diagnostic_goto = function(next, severity)
+    local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+    severity = severity and vim.diagnostic.severity[severity] or nil
+    return function()
+        go({ severity = severity })
+    end
+end
 return {
     {
         "akinsho/toggleterm.nvim",
@@ -61,10 +68,8 @@ return {
             require("Comment").setup()
             vim.keymap.set("n", "<C-_>", "gcc", { remap = true }, { desc = "Comment Line" }) -- Needed for tmux
             vim.keymap.set("x", "<C-_>", "gc", { remap = true }, { desc = "Comment Line" }) -- Needed for tmux
-
             vim.keymap.set("n", "<C-/>", "gcc", { remap = true }, { desc = "Comment Line" })
             vim.keymap.set("x", "<C-/>", "gc", { remap = true }, { desc = "Comment Line" })
-
             vim.keymap.set("n", "gC", "gcc", { remap = true }, { desc = "Comment Line" })
             vim.keymap.set("x", "gC", "gc", { remap = true }, { desc = "Comment Line" })
         end,
@@ -196,12 +201,16 @@ return {
             -- { "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
             -- { "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
             {
-                "[q",
+                -- "[q",
+                "<C-[>",
                 function()
                     if require("trouble").is_open() then
                         require("trouble").previous({ skip_groups = true, jump = true })
                     else
-                        local ok, err = pcall(vim.cmd.cprev)
+                        -- keymap("n", "<C-[>", diagnostic_goto(false), { desc = "Previous Diagnostic" }, opts)
+                        -- keymap("n", "<C-]>", diagnostic_goto(true), { desc = "Next Diagnostic" }, opts)
+                        -- local ok, err = pcall(vim.cmd.cprev)
+                        local ok, err = pcall(diagnostic_goto(false))
                         if not ok then
                             vim.notify(err, vim.log.levels.ERROR)
                         end
@@ -210,12 +219,14 @@ return {
                 desc = "Previous trouble/quickfix item",
             },
             {
-                "]q",
+                -- "]q",
+                "<C-]>",
                 function()
                     if require("trouble").is_open() then
                         require("trouble").next({ skip_groups = true, jump = true })
                     else
-                        local ok, err = pcall(vim.cmd.cnext)
+                        -- local ok, err = pcall(vim.cmd.cnext)
+                        local ok, err = pcall(diagnostic_goto(true))
                         if not ok then
                             vim.notify(err, vim.log.levels.ERROR)
                         end
