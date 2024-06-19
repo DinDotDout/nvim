@@ -1,5 +1,6 @@
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+vim.g.maplocalleader = " "
+-- vim.g.maplocalleader = "\\"
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
@@ -104,6 +105,7 @@ keymap("n", "<leader>cq", "<cmd>copen<CR>", { desc = "Quickfix List" }, opts)
 keymap("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" }, opts)
 keymap("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" }, opts)
 
+
 -- formatting
 -- keymap({ "n", "v" }, "<leader>cf", function()
 --  Util.format({ force = true })
@@ -118,6 +120,10 @@ local diagnostic_goto = function(next, severity)
     end
 end
 keymap("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" }, opts)
+
+keymap("n", "<C-[>", diagnostic_goto(false), { desc = "Previous Diagnostic" }, opts)
+keymap("n", "<C-]>", diagnostic_goto(true), { desc = "Next Diagnostic" }, opts)
+
 keymap("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" }, opts)
 keymap("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" }, opts)
 keymap("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" }, opts)
@@ -163,3 +169,11 @@ keymap("t", "<C-h>", "<cmd>wincmd h<cr>", { desc = "Go to left window", remap = 
 keymap("t", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go to lower window", remap = true }, opts)
 keymap("t", "<C-k>", "<cmd>wincmd k<cr>", { desc = "Go to upper window", remap = true }, opts)
 keymap("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to right window", remap = true }, opts)
+
+keymap("n", "<leader>bc", function()
+    local filename = vim.fn.input("Enter filename > ")
+    local dir = vim.fn.fnamemodify(filename, ':h')
+    vim.cmd('!mkdir -p ' .. dir)
+    vim.cmd('!touch ' .. filename)
+    vim.cmd('edit ' .. filename)
+end, { desc = "Create and open a new file", remap = true }, opts)
