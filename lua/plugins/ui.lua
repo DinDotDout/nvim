@@ -95,14 +95,16 @@ return {
         opts = function()
             local lualine_require = require("lualine_require")
             lualine_require.require = require
-
             vim.o.laststatus = vim.g.lualine_laststatus
 
             return {
                 options = {
-                    -- theme = "auto",
                     theme = "everforest",
                     globalstatus = true,
+                    component_separators = "",
+                    -- section_separators = { left = "", right = "" },
+                    section_separators = { left = "", right = "" },
+                    
                     disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
                 },
                 sections = {
@@ -139,6 +141,9 @@ return {
                         {
                             "diff",
                             symbols = {
+                                -- added = "+ ",
+                                -- modified = "~ ",
+                                -- removed = "- ",
                                 added = " ",
                                 modified = " ",
                                 removed = " ",
@@ -182,6 +187,10 @@ return {
                 ["["] = { name = "+prev" },
                 -- ["<leader><tab>"] = { name = "+tabs" },
                 ["<leader>c"] = { name = "+code" },
+                ["<leader>d"] = { name = "+dap" },
+                ["<leader>l"] = { name = "+lua/latex" },
+                ["<leader>a"] = { name = "+AI" },
+                ["<leader>b"] = { name = "+buffer" },
                 ["<leader>f"] = { name = "+file" },
                 ["<leader>s"] = { name = "+search" },
                 ["<leader>u"] = { name = "+ui" },
