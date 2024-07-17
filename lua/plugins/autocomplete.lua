@@ -110,6 +110,7 @@ return {
                     end,
                 }),
                 sources = cmp.config.sources({
+                    { name = "cody" },
                     { name = "nvim_lsp" },
                     { name = "copilot" },
                     { name = "luasnip" }, -- Add luasnip as a source

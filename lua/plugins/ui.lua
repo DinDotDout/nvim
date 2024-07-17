@@ -179,30 +179,43 @@ return {
         event = "VeryLazy",
         opts = {
             plugins = { spelling = true },
-            defaults = {
-                mode = { "n", "v" },
-                ["g"] = { name = "+goto" },
-                -- ["gs"] = { name = "+surround" },
-                ["]"] = { name = "+next" },
-                ["["] = { name = "+prev" },
-                -- ["<leader><tab>"] = { name = "+tabs" },
-                ["<leader>c"] = { name = "+code" },
-                ["<leader>d"] = { name = "+dap" },
-                ["<leader>l"] = { name = "+lua/latex" },
-                ["<leader>a"] = { name = "+AI" },
-                ["<leader>b"] = { name = "+buffer" },
-                ["<leader>f"] = { name = "+file" },
-                ["<leader>s"] = { name = "+search" },
-                ["<leader>u"] = { name = "+ui" },
-                ["<leader>w"] = { name = "+windows" },
-                ["<leader>x"] = { name = "+diagnostics/quickfix" },
+            defaults = {},
+            spec = {
+                {
+                    mode = { "n", "v" },
+                    { "g", group = "goto" },
+                    { "]", group = "next" },
+                    { "[", group = "prev" },
+                    { "<leader>c", group = "code" },
+                    { "<leader>g", group = "Git" },
+                    { "<leader>d", group = "DAP" },
+                    { "<leader>l", group = "lua/latex" },
+                    { "<leader>a", group = "AI" },
+                    { "<leader>b", group = "buffer" },
+                    { "<leader>f", group = "file" },
+                    { "<leader>s", group = "search" },
+                    { "<leader>u", group = "ui" },
+                    { "<leader>w", group = "windows" },
+                    { "<leader>x", group = "diagnostics/quickfix" },
+                },
             },
         },
         config = function(_, opts)
             local wk = require("which-key")
             wk.setup(opts)
-            wk.register(opts.defaults)
+            if not vim.tbl_isempty(opts.defaults) then
+                wk.register(opts.defaults)
+            end
         end,
+        keys = {
+            {
+                "<leader>?",
+                function()
+                    require("which-key").show({ global = false })
+                end,
+                desc = "Buffer Keymaps (which-key)",
+            },
+        },
     },
     {
         "nvimdev/dashboard-nvim",
