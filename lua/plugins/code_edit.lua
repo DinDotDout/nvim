@@ -81,21 +81,6 @@ return {
         keys = { { "<leader>ut", "<cmd>UndotreeToggle<CR>", desc = "Undotree" } },
     },
 
-    -- {
-    --     "simrat39/symbols-outline.nvim",
-    --     cmd = "SymbolsOutline",
-    --     keys = { { "<leader>cs", "<cmd>SymbolsOutline<CR>", desc = "Symbols Outline" } },
-    --     config = true,
-    -- },
-    -- {
-    --     "nvim-pack/nvim-spectre",
-    --     build = false,
-    --     cmd = "Spectre",
-    --     opts = { open_cmd = "noswapfile vnew" },
-    --     -- stylua: ignore
-    --     keys = { { "<leader>ss", function()     require("spectre").open()
-    --     end, desc = "Replace in files (Spectre)" },},
-    -- },
 
     -- Mostly from lazyvim
     -- Allows better actions jumping to them when found within n_lines
