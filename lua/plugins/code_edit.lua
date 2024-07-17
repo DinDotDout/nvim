@@ -81,12 +81,12 @@ return {
         keys = { { "<leader>ut", "<cmd>UndotreeToggle<CR>", desc = "Undotree" } },
     },
 
-    {
-        "simrat39/symbols-outline.nvim",
-        cmd = "SymbolsOutline",
-        keys = { { "<leader>cs", "<cmd>SymbolsOutline<CR>", desc = "Symbols Outline" } },
-        config = true,
-    },
+    -- {
+    --     "simrat39/symbols-outline.nvim",
+    --     cmd = "SymbolsOutline",
+    --     keys = { { "<leader>cs", "<cmd>SymbolsOutline<CR>", desc = "Symbols Outline" } },
+    --     config = true,
+    -- },
     -- {
     --     "nvim-pack/nvim-spectre",
     --     build = false,
