@@ -104,7 +104,7 @@ return {
                     component_separators = "",
                     -- section_separators = { left = "", right = "" },
                     section_separators = { left = "", right = "" },
-                    
+
                     disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
                 },
                 sections = {

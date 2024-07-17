@@ -127,6 +127,7 @@ return {
             { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
             { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
             { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
+            { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Search Todo Comments" },
         },
         opts = function()
             local actions = require("telescope.actions")
