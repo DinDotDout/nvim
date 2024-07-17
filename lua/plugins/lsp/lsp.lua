@@ -75,12 +75,12 @@ local function keymaps(event)
     map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
     map("gt", require("telescope.builtin").lsp_type_definitions, "[G]oto [T]ype definition")
 
-    map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+    map("<leader>cs", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
     map("<leader>cS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
     map("K", vim.lsp.buf.hover, "Hover Documentation")
 
     map("<C-S-k>", vim.lsp.buf.signature_help, "Signature help") -- show
-    map("<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", "Type [D]efinition")
+    map("<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", "Telescope diagnostics")
 
     -- The following two autocommands are used to highlight references of the
     -- word under your cursor when your cursor rests there for a little while.
