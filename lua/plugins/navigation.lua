@@ -63,7 +63,10 @@ return {
                 ["<C-l>"] = "<cmd>wincmd l<cr>",
             },
         },
-        keys = { { "<leader>e", "<cmd>Oil<CR>", desc = "Open file explorer" } },
+        keys = {
+            { "<leader>e", "<cmd>Oil<CR>", desc = "Open file explorer" },
+            { "<leader>E", "<cmd>Oil .<CR>", desc = "Open at cwd" },
+        },
     },
     {
         "nvim-telescope/telescope.nvim",
@@ -88,11 +91,13 @@ return {
                 desc = "Switch Buffer",
             },
             { "<leader>sl", "<cmd>Telescope live_grep<cr>", desc = "Grep (root dir)" },
-            { "<leader>/", function()
-                local builtin = require('telescope.builtin')
-                builtin.grep_string({ search = vim.fn.input("Grep > ")})
+            {
+                "<leader>/",
+                function()
+                    local builtin = require("telescope.builtin")
+                    builtin.grep_string({ search = vim.fn.input("Grep > ") })
                 end,
-                desc = "Grep (root dir)"
+                desc = "Grep (root dir)",
             },
             { "<leader>.", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
             { "<leader>sg", "<cmd>Telescope git_files<cr>", desc = "Find Git Files (root dir)" },
