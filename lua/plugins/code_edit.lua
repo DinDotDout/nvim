@@ -43,8 +43,14 @@ return {
                 vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]]),
                 vim.keymap.set(
                     "n",
+                    "<leader>ct",
+                    '<cmd>TermExec cmd="./build/build_run.sh Release"<cr>',
+                    { desc = "Toggleterm build.sh" }
+                ),
+                vim.keymap.set(
+                    "n",
                     "<leader>cx",
-                    '<cmd>TermExec cmd="./build.sh"<cr>',
+                    '<cmd>TermExec cmd="./build/build_run.sh Debug"<cr>',
                     { desc = "Toggleterm build.sh" }
                 ),
                 --   -- vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
