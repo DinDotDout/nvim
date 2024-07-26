@@ -208,7 +208,8 @@ return {
 
             local function get_dap_type()
                 local dap_types = {
-                    cpp = "cppdbg", }
+                    cpp = "cppdbg",
+                }
                 local ext = vim.fn.expand("%:e")
                 return dap_types[ext]
             end
@@ -221,7 +222,7 @@ return {
                 end
                 dap.run({
                     name = "CPP Run this",
-                    type = "cppdbg",
+                    type = dap_type,
                     request = "launch",
                     cwd = "${workspaceFolder}",
                     preLaunchTask = build_task,
