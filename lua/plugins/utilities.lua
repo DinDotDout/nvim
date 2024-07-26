@@ -43,13 +43,13 @@ return {
         opts = { "rasi", "json", "toml", "yaml", "yml", "lua", "css", "conf" },
     },
 
-    {
-        "echasnovski/mini.indentscope",
-        opts = {
-            symbol = "┃",
-            options = { try_as_border = true },
-        },
-    },
+    -- {
+    --     "echasnovski/mini.indentscope",
+    --     opts = {
+    --         symbol = "┃",
+    --         options = { try_as_border = true },
+    --     },
+    -- },
 
     {
         "lukas-reineke/indent-blankline.nvim",
