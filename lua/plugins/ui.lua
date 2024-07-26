@@ -188,7 +188,7 @@ return {
                     { "[", group = "prev" },
                     { "<leader>c", group = "code" },
                     { "<leader>g", group = "Git" },
-                    { "<leader>d", group = "DAP" },
+                    { "<leader>t", group = "DAP" },
                     { "<leader>l", group = "lua/latex" },
                     { "<leader>a", group = "AI" },
                     { "<leader>b", group = "buffer" },
@@ -207,15 +207,6 @@ return {
                 wk.register(opts.defaults)
             end
         end,
-        keys = {
-            {
-                "<leader>?",
-                function()
-                    require("which-key").show({ global = false })
-                end,
-                desc = "Buffer Keymaps (which-key)",
-            },
-        },
     },
     {
         "nvimdev/dashboard-nvim",
