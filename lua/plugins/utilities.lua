@@ -19,10 +19,6 @@ return {
         "ThePrimeagen/vim-be-good",
         lazy = true,
     },
-    {
-        "preservim/vim-pencil",
-        keys = { { "<leader>n", "<cmd>TogglePencil<CR>", desc = "Pencil mode" } },
-    },
 
     { -- Centers current buffer
         "shortcuts/no-neck-pain.nvim",

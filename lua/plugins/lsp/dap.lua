@@ -53,6 +53,7 @@ return {
             "nvim-neotest/nvim-nio",
             {
                 "rcarriga/nvim-dap-ui",
+                -- dependencies = "nvim-telescope/telescope-dap.nvim",
                 opts = {
                     icons = {
                         expanded = "󰅀",
@@ -121,14 +122,14 @@ return {
                 desc = "DAP Continue",
             },
             {
-                "<F6>",
+                "<F10>",
                 function()
                     require("dap").run_last()
                 end,
                 desc = "Run Last",
             },
             {
-                "<F7>",
+                "<F6>",
                 function()
                     require("dap").run_to_cursor()
                 end,
@@ -142,6 +143,7 @@ return {
         config = function()
             -- It appears that codelldb works as cpp tools for now, keep cpptools?
             -- Signs
+            -- require('telescope').load_extension('dap')
             local sign = vim.fn.sign_define
             local dap_round_groups =
                 { "DapBreakpoint", "DapBreakpointCondition", "DapBreakpointRejected", "DapLogPoint" }

@@ -5,8 +5,6 @@ vim.g.maplocalleader = " "
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
-keymap("n", "<leader>", "<nop>", opts) -- Unmap leader
-
 -- Macro keybinds and unbind Q
 keymap("n", "Q", "@qj", { desc = "Execute 'q' macro and jump down" }, opts) -- Execute macro and jump down
 keymap("x", "Q", ":norm @q<CR>", { desc = "Execute 'q' macro on selection" }, opts) -- Execute macro on selection
@@ -131,7 +129,7 @@ keymap("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" }, opts
 keymap("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" }, opts)
 keymap("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" }, opts)
 
-local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
+-- local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
 keymap("n", "<leader>uT", function()
     if vim.b.ts_highlight then
         vim.treesitter.stop()

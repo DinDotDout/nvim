@@ -5,6 +5,7 @@ local function augroup(name)
 end
 
 autocmd({ "BufRead", "BufNewFile" }, {
+    group = augroup("auto gdshader filetype"),
     pattern = { "*.gdshader", "*.gdshaderinc" },
     callback = function()
         -- vim.lsp.start({
@@ -19,7 +20,34 @@ autocmd({ "BufRead", "BufNewFile" }, {
     end,
 })
 
+-- autocmd({ "FileType" }, {
+--     group = augroup("pencil"),
+--     pattern = { "markdown", "mkd", "txt", "md" },
+--
+--     -- pattern = { "*.markdown", "*.mkd", "*.txt", "*.md" },
+--     -- pattern = { "*.markdown", "*.mkd", "*.txt", "*.md" },
+--     callback = function()
+--         print("Pencil")
+--         -- vim.cmf("set filetype?")
+--         vim.cmd("setlocal nowrap")
+--         vim.cmd("setlocal nobreakindent")
+--         vim.wo.wrap = false
+--         vim.wo.breakindent = false
+--         vim.opt.wrap = false
+--         vim.opt.breakindent = false
+--     end,
+-- })
+-- vim.api.nvim_create_autocmd("InsertEnter", {
+--     pattern = { "*.markdown", "*.mkd", "*.txt", "*.md" },
+--     callback = function()
+--         vim.cmd("set wrap")
+--         vim.cmd("set breakindent")
+--     end,
+--     group = "pencil",
+-- })
+
 autocmd({ "BufRead", "BufNewFile" }, {
+    group = augroup("auto glsl filetype"),
     pattern = { ".glsl", "*.comp", "*.vert", "*.frag", "*.ply", "*.lst", "*.obj", "*.gltf", "*.glb" },
     callback = function()
         vim.cmd("set filetype=glsl")
@@ -33,9 +61,9 @@ autocmd({ "BufRead", "BufNewFile" }, {
 --     command = "setlocal commentstring=//%s",
 -- })
 
-
 -- Autocmd for lualine
-vim.api.nvim_create_autocmd("RecordingEnter", {
+autocmd("RecordingEnter", {
+    group = augroup("lualine update"),
     callback = function()
         require("lualine").refresh({
             place = { "statusline" },
@@ -43,7 +71,8 @@ vim.api.nvim_create_autocmd("RecordingEnter", {
     end,
 })
 
-vim.api.nvim_create_autocmd("RecordingLeave", {
+autocmd("RecordingLeave", {
+    group = augroup("lualine timer update"),
     callback = function()
         -- This is going to seem really weird!
         -- Instead of just calling refresh we need to wait a moment because of the nature of
@@ -66,7 +95,7 @@ vim.api.nvim_create_autocmd("RecordingLeave", {
 
 -- Lazyvim sane defaults
 -- Check if we need to reload the file when it changed
-vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
     group = augroup("checktime"),
     callback = function()
         if vim.o.buftype ~= "nofile" then
@@ -76,7 +105,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 })
 
 -- Highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
+autocmd("TextYankPost", {
     group = augroup("highlight_yank"),
     callback = function()
         vim.highlight.on_yank()
@@ -84,7 +113,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- resize splits if window got resized
-vim.api.nvim_create_autocmd({ "VimResized" }, {
+autocmd({ "VimResized" }, {
     group = augroup("resize_splits"),
     callback = function()
         local current_tab = vim.fn.tabpagenr()
@@ -94,7 +123,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 })
 
 -- go to last loc when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
+autocmd("BufReadPost", {
     group = augroup("last_loc"),
     callback = function(event)
         local exclude = { "gitcommit" }
@@ -112,9 +141,11 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- close some filetypes with <q>
-vim.api.nvim_create_autocmd("FileType", {
+autocmd("FileType", {
     group = augroup("close_with_q"),
     pattern = {
+        "dap-hover",
+        "dap-scopes",
         "PlenaryTestPopup",
         "help",
         "lspinfo",
@@ -122,7 +153,7 @@ vim.api.nvim_create_autocmd("FileType", {
         "notify",
         "qf",
         "query",
-        "spectre_panel",
+        -- "spectre_panel",
         -- "startuptime",
         "tsplayground",
         "neotest-output",
@@ -137,7 +168,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- wrap and check for spell in text filetypes
-vim.api.nvim_create_autocmd("FileType", {
+autocmd("FileType", {
     group = augroup("wrap_spell"),
     pattern = { "gitcommit", "markdown" },
     callback = function()
@@ -147,7 +178,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Fix conceallevel for json files
-vim.api.nvim_create_autocmd({ "FileType" }, {
+autocmd({ "FileType" }, {
     group = augroup("json_conceal"),
     pattern = { "json", "jsonc", "json5" },
     callback = function()
@@ -156,7 +187,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+autocmd({ "BufWritePre" }, {
     group = augroup("auto_create_dir"),
     callback = function(event)
         if event.match:match("^%w%w+://") then
