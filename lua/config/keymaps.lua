@@ -4,6 +4,19 @@ vim.g.maplocalleader = " "
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
+-- keymap("n", "<C-_>", ":normal I#<CR>", { desc = "Comment Line" }) -- Needed for tmux
+-- keymap("x", "<C-_>", ":normal I#<CR>", { desc = "Comment Line" }) -- Needed for tmux
+-- keymap("n", "<C-/>", ":normal I#<CR>", { desc = "Comment Line" })
+-- keymap("x", "<C-/>", ":normal I#<CR>", { desc = "Comment Line" })
+-- keymap("n", "gC", ":normal I#<CR>", { desc = "Comment Line" })
+-- keymap("x", "gC", ":normal I#<CR>", { desc = "Comment Line" })
+
+keymap("n", "<C-_>", "gcc", { remap = true }, { desc = "Comment Line" }) -- Needed for tmux
+keymap("x", "<C-_>", "gc", { remap = true }, { desc = "Comment Line" }) -- Needed for tmux
+keymap("n", "<C-/>", "gcc", { remap = true }, { desc = "Comment Line" })
+keymap("x", "<C-/>", "gc", { remap = true }, { desc = "Comment Line" })
+-- keymap("n", "gC", "gcc", { remap = true }, { desc = "Comment Line" })
+-- keymap("x", "gC", "gc", { remap = true }, { desc = "Comment Line" })
 
 -- Macro keybinds and unbind Q
 keymap("n", "Q", "@qj", { desc = "Execute 'q' macro and jump down" }, opts) -- Execute macro and jump down
@@ -103,7 +116,6 @@ keymap("n", "<leader>cq", "<cmd>copen<CR>", { desc = "Quickfix List" }, opts)
 keymap("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" }, opts)
 keymap("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" }, opts)
 
-
 -- formatting
 -- keymap({ "n", "v" }, "<leader>cf", function()
 --  Util.format({ force = true })
@@ -142,8 +154,9 @@ end, { desc = "Toggle Treesitter Highlight" }, opts)
 keymap("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" }, opts)
 
 -- quit
-keymap("n", "<leader>Q", "<cmd>confirm qall<CR>", { desc = "Quit all" }, opts)
-keymap("n", "<leader>q", "<cmd>quit<CR>", { desc = "Close window/Quit", noremap = true, silent = true }, opts)
+-- keymap("n", "<leader>Q", "<cmd>confirm qall<CR>", { desc = "Quit all" }, opts)
+-- keymap("n", "<leader>q", "<cmd>quit<CR>", { desc = "Close window/Quit", noremap = true, silent = true }, opts)
+
 -- keymap("n", "<leader>bd", "<cmd>bd<Cr>", { desc = "Delete buffer", remap = true }, opts)
 keymap("n", "<leader>bd", "<cmd>bnext | bd #<Cr>", { desc = "Delete buffer", remap = true }, opts)
 -- keymap("n", "<leader>bd", "<cmd>if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) > 1 | bnext | endif | bd #<Cr>", { desc = "Delete buffer", remap = true }, opts)
@@ -170,8 +183,8 @@ keymap("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to right window", remap =
 
 keymap("n", "<leader>bc", function()
     local filename = vim.fn.input("Enter filename > ")
-    local dir = vim.fn.fnamemodify(filename, ':h')
-    vim.cmd('!mkdir -p ' .. dir)
-    vim.cmd('!touch ' .. filename)
-    vim.cmd('edit ' .. filename)
+    local dir = vim.fn.fnamemodify(filename, ":h")
+    vim.cmd("!mkdir -p " .. dir)
+    vim.cmd("!touch " .. filename)
+    vim.cmd("edit " .. filename)
 end, { desc = "Create and open a new file", remap = true }, opts)
