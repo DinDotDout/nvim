@@ -95,7 +95,11 @@ return {
                 "<leader>/",
                 function()
                     local builtin = require("telescope.builtin")
-                    builtin.grep_string({ search = vim.fn.input("Grep > ") })
+                    local str = vim.fn.input("Grep > ")
+                    if str == "" then
+                        return
+                    end
+                    builtin.grep_string({ search = str })
                 end,
                 desc = "Grep (root dir)",
             },
