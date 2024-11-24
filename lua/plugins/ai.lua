@@ -1,16 +1,16 @@
 return {
-    {
-        -- "github/copilot.vim",
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function()
-            require("copilot").setup({
-                suggestion = { enabled = false },
-                panel = { enabled = false },
-            })
-        end,
-    },
+    -- {
+    --     -- "github/copilot.vim",
+    --     "zbirenbaum/copilot.lua",
+    --     cmd = "Copilot",
+    --     event = "InsertEnter",
+    --     config = function()
+    --         require("copilot").setup({
+    --             suggestion = { enabled = false },
+    --             panel = { enabled = false },
+    --         })
+    --     end,
+    -- },
     {
         "CopilotC-Nvim/CopilotChat.nvim",
         branch = "canary",
@@ -18,7 +18,7 @@ return {
             debug = false, -- Enable or disable debug mode, the log file will be in ~/.local/state/nvim/CopilotChat.nvim.log
             disable_extra_info = "yes", -- Disable extra information (e.g: system prompt) in the response.
             window = { layout = "float" },
-            -- proxy = "socks5://127.0.0.1:3000", -- Proxies requests via https or socks.
+            auto_follow_cursor = false, -- Auto-follow cursor in chat
         },
         dependencies = {
             { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
@@ -36,6 +36,12 @@ return {
                 desc = "CopilotChat - Toggle",
             },
             {
+                "<leader>as",
+                ":CopilotChatStop<cr>",
+                mode = { "n" },
+                desc = "CopilotChat - Stop Answering",
+            },
+            {
                 "<leader>am",
                 ":CopilotChatCommitStaged<cr>",
                 mode = { "n" },
@@ -48,7 +54,7 @@ return {
                     local input = vim.fn.input("Quick Chat: ")
                     if input ~= "" then
                         if vim.fn.mode() == "v" or vim.fn.mode() == "V" or vim.fn.mode() == "^V" then
-                            require("CopilotChat").ask(input, { selection = require("CopilotChat.select").visual  })
+                            require("CopilotChat").ask(input, { selection = require("CopilotChat.select").visual })
                         else
                             require("CopilotChat").ask(input, { selection = require("CopilotChat.select").buffer })
                         end
