@@ -1,3 +1,4 @@
+-- CPP DBG does not have stop events and shows less info
 local function taskExistsOrNil(taskName)
     -- Get the path to the tasks.json file in the .vscode directory of the current working directory
     local tasksFile = vim.fn.getcwd() .. "/.vscode/tasks.json"
@@ -39,8 +40,9 @@ return {
         opts = {
             handlers = {},
             enssure_installed = {
-                -- "codelldb",
-                "cpptools",
+                "codelldb",
+                -- "cpptools",
+                "cppdbg",
             },
         },
     },
@@ -152,6 +154,8 @@ return {
             end
 
             local dap = require("dap")
+            vim.keymap.set("n", "<F7>", dap.step_back)
+
             -- Replace this with your own logic to check if the task exists
             local pickers = require("telescope.pickers")
             local finders = require("telescope.finders")
@@ -159,6 +163,20 @@ return {
             local actions = require("telescope.actions")
             local action_state = require("telescope.actions.state")
             local build_task = taskExistsOrNil("build") -- NOTE: Will need to reload plugin
+            local dapui = require("dapui")
+            -- dapui.setup()
+
+            dap.listeners.after.event_initialized["dapui_config"] = function()
+                dapui.open()
+            end
+
+            dap.listeners.before.event_terminated["dapui_config"] = function()
+                dapui.close()
+            end
+            dap.listeners.before.event_exited["dapui_config"] = function()
+                dapui.close()
+            end
+
             local cppconfig = {
                 name = "Dap CPP choose executable",
                 type = "cppdbg",

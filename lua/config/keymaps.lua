@@ -111,7 +111,21 @@ keymap("v", ">", ">gv", opts)
 -- new file
 keymap("n", "<leader>fn", "<cmd>enew<CR>", { desc = "New File" }, opts)
 
-keymap("n", "<leader>cq", "<cmd>copen<CR>", { desc = "Quickfix List" }, opts)
+local function toggle_quickfix()
+    local quickfix_open = false
+    for _, win in pairs(vim.fn.getwininfo()) do
+        if win.quickfix == 1 then
+            quickfix_open = true
+            break
+        end
+    end
+    if quickfix_open then
+        vim.cmd("cclose")
+    else
+        vim.cmd("copen")
+    end
+end
+keymap("n", "<leader>q", function() toggle_quickfix()end, { desc = "Quickfix List" }, opts)
 
 keymap("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" }, opts)
 keymap("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" }, opts)

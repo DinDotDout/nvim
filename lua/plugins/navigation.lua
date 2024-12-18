@@ -47,28 +47,6 @@ return {
         end,
     },
     {
-        "stevearc/oil.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        lazy = false,
-        opts = {
-            view_options = {
-                show_hidden = true,
-            },
-            default_file_explorer = true,
-            keymaps = {
-                ["<esc>"] = "actions.close",
-                ["<leader>e"] = "actions.close",
-                ["q"] = "actions.close",
-                ["<C-h>"] = "<cmd>wincmd h<cr>",
-                ["<C-l>"] = "<cmd>wincmd l<cr>",
-            },
-        },
-        keys = {
-            { "<leader>e", "<cmd>Oil<CR>", desc = "Open file explorer" },
-            { "<leader>E", "<cmd>Oil .<CR>", desc = "Open at cwd" },
-        },
-    },
-    {
         "nvim-telescope/telescope.nvim",
         cmd = "Telescope",
         version = false, -- telescope did only one release, so use HEAD for now
@@ -139,6 +117,7 @@ return {
             { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Search Todo Comments" },
         },
         opts = function()
+            require("telescope").load_extension('fzf')
             local actions = require("telescope.actions")
             local builtin = require("telescope.builtin")
             local find_files_no_ignore = function()
@@ -197,6 +176,7 @@ return {
                         },
                     },
                 },
+                extensions = { fzf = {} },
                 -- Hidden files included
                 -- pickers = {
                 --     find_files = {
