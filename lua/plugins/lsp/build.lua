@@ -33,6 +33,12 @@ return {
         end,
         keys = {
             {
+                "<leader>xm",
+                mode = { "n", "v" },
+                "<cmd>Task start cmake configure<cr>",
+                desc = "Rerun cmake configure",
+            },
+            {
                 "<leader>xc",
                 mode = { "n", "v" },
                 "<cmd>Task cancel<cr>",
@@ -48,7 +54,7 @@ return {
                 "<leader>xb",
                 mode = { "n", "v" },
                 "<cmd>Task start cmake build<cr>",
-                desc = "Cmake build and build",
+                desc = "Cmake build",
             },
             {
                 "<leader>xd",
