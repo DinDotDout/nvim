@@ -12,7 +12,7 @@ return {
             keymap.set("n", "<leader>m", function()
                 harpoon:list():add()
             end, { desc = "Mark File (Harpoon)" })
-            keymap.set("n", "<C-e>", function()
+            keymap.set("n", "<leader>h", function()
                 harpoon.ui:toggle_quick_menu(harpoon:list())
             end, { desc = "Harpoon Quick Menu" })
 
@@ -82,7 +82,7 @@ return {
                 desc = "Grep (root dir)",
             },
             { "<leader>.", "<cmd>Telescope find_files<cr>", desc = "Find Files (root dir)" },
-            { "<leader>sg", "<cmd>Telescope git_files<cr>", desc = "Find Git Files (root dir)" },
+            -- { "<leader>sg", "<cmd>Telescope git_files<cr>", desc = "Find Git Files (root dir)" },
 
             -- { "<leader>sf", "<cmd>Telescope find_files hidden=true<cr>", desc = "Find Files (hidden)" },
             -- {
@@ -90,7 +90,7 @@ return {
             --     "<cmd>Telescope live_grep vimgrep_arguments={'rg', '--hidden', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case'}<cr>",
             --     desc = "Grep (root dir hidden)",
             -- },
-
+            --
             {
                 "<leader>sw",
                 "<cmd>Telescope grep_string<cr>",
@@ -115,9 +115,40 @@ return {
             { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
             { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
             { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Search Todo Comments" },
+            {
+                "<leader>fc",
+                function()
+                    local builtin = require("telescope.builtin")
+                    local filetype = vim.fn.input("File Type > ")
+                    if filetype == "" then
+                        return
+                    end
+                    builtin.find_files({
+                        prompt_title = "Find " .. filetype .. " Files",
+                        find_command = { "rg", "--files", "--type", filetype },
+                    })
+                end,
+                desc = "Find Files by Type",
+            },
+            {
+                "<leader>sc",
+                function()
+                    local builtin = require("telescope.builtin")
+                    local filetype = vim.fn.input("File Type > ")
+                    if filetype == "" then
+                        return
+                    end
+                    builtin.live_grep({
+                        prompt_title = "Grep in " .. filetype .. " Files",
+                        additional_args = function()
+                            return { "--type", filetype }
+                        end,
+                    })
+                end,
+                desc = "Grep in Files by Type",
+            },
         },
         opts = function()
-            require("telescope").load_extension('fzf')
             local actions = require("telescope.actions")
             local builtin = require("telescope.builtin")
             local find_files_no_ignore = function()
@@ -132,12 +163,41 @@ return {
                 builtin.find_files({ hidden = true, default_text = line })
                 -- Util.telescope("find_files", { hidden = true, default_text = line })()
             end
+            -- local telescopeConfig = require("telescope.config")
+            -- local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+            -- table.insert(vimgrep_arguments, "--glob")
+            -- table.insert(vimgrep_arguments, "!**/.git/*")
+            -- table.insert(vimgrep_arguments, "--ignore-file")
+            -- table.insert(vimgrep_arguments, ".p4ignore")
+            -- local find_files_command = { "rg", "--files" }
+            -- for _, arg in ipairs(vimgrep_arguments) do
+            --     table.insert(find_files_command, arg)
+            -- end
+            -- find_files_command = { "rg", "--files", "--hidden", "--ignore-file", ".p4ignore", "--glob", "!**/.git/*" }
 
             return {
                 defaults = {
                     layout_strategy = "horizontal",
                     layout_config = { prompt_position = "bottom" },
                     sorting_strategy = "ascending",
+                    -- vimgrep_arguments = vimgrep_arguments,
+                    -- pickers = {
+                    --     find_files = {
+                    --         find_command = {
+                    --             "ag",
+                    --             "--silent",
+                    --             "--nocolor",
+                    --             "--follow",
+                    --             "-g",
+                    --             "",
+                    --             "--literal",
+                    --             "--hidden",
+                    --             "--ignore",
+                    --             ".git ",
+                    --         },
+                    --     },
+                    -- },
+                    -- },
 
                     prompt_prefix = " ",
                     selection_caret = " ",
@@ -176,7 +236,6 @@ return {
                         },
                     },
                 },
-                extensions = { fzf = {} },
                 -- Hidden files included
                 -- pickers = {
                 --     find_files = {
