@@ -34,9 +34,9 @@ return {
                 -- Whether to delete permanently or move into module-specific trash
                 permanent_delete = false,
             },
-        },
-        windows = {
-            preview = true,
+            windows = {
+                preview = true,
+            },
         },
 
         keys = {
