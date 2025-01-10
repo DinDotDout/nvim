@@ -1,82 +1,38 @@
-local mason_servers = {
-    clangd = {
-        cmd = { "clangd", "--offset-encoding=utf-16" },
-        on_attach = function(client, bufnr)
-            -- Define the command only if clangd is attached
-            vim.api.nvim_buf_set_keymap(
-                bufnr,
-                "n",
-                "gh",
-                "<cmd>ClangdSwitchSourceHeader<CR>",
-                { noremap = true, silent = true }
-            )
-        end,
-    },
-    html = {},
-    cssls = {},
-    glsl_analyzer = {},
-
-    lua_ls = {
-        settings = {
-            Lua = {
-                runtime = { version = "LuaJIT" },
-                workspace = {
-                    checkThirdParty = false,
-                    -- Tells lua_ls where to find all the Lua files that you have loaded
-                    -- for your neovim configuration.
-                    library = {
-                        "${3rd}/luv/library",
-                        unpack(vim.api.nvim_get_runtime_file("", true)),
-                    },
-                    -- If lua_ls is really slow on your computer, you can try this instead:
-                    -- library = { vim.env.VIMRUNTIME },
-                },
-                completion = {
-                    callSnippet = "Replace",
-                },
-                -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-                -- diagnostics = { disable = { 'missing-fields' } },
-            },
-        },
-    },
-}
-
-local other_servers = {
-    glslls = {
-        -- cmd = { "glslls", "--stdin" },
-        -- single_file_support = true,
-    },
-    gdscript = {},
-}
-
-local function defineDiagnosticSigns()
-    -- local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-    local signs = { Error = " ", Warn = " ", Hint = "", Info = " " }
-    for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-    end
-end
-
 local function keymaps(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    -- require("completion").on_attach(client)
+    -- require("diagnostic").on_attach(client)
     local map = function(keys, func, desc)
         vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP " .. desc })
     end
     -- map("<leader>cl", "<cmd>LspInfo<cr>", "Info")
-    -- map("<leader>cf", vim.lsp.buf.format, "lsp Code format")
+    map("<leader>cf", vim.lsp.buf.format, "lsp Code format")
     -- map("<leader>co", ":LspRestart<CR>", "Restart")
-    -- map("<leader>cr", vim.lsp.buf.rename, "[R]e[n]ame")
-    map("cr", vim.lsp.buf.rename, "[R]e[n]ame")
-    map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+    map("crn", vim.lsp.buf.rename, "[R]e[n]ame")
 
-    map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+    -- TODO: Leave defaults?
+    map("crr", vim.lsp.buf.code_action, "[C]ode [A]ction")
+
+    map("gs", vim.lsp.buf.document_symbol, "Document symbols")
+    map("gS", vim.lsp.buf.workspace_symbol, "Document symbols")
+    map("gr", vim.lsp.buf.references, "[G]oto [R]references")
+    map("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+    -- map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
     map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-    map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-    map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-    map("gt", require("telescope.builtin").lsp_type_definitions, "[G]oto [T]ype definition")
+    -- map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+    map("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+    map("gi", vim.lsp.buf.incoming_calls, "[G]oto [I]incoming calls")
+    map("go", vim.lsp.buf.outgoing_calls, "[G]oto [O]utgoing calls")
+    map("gt", vim.lsp.buf.type_definition, "[G]oto [T]ype definition")
+    -- map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+    -- map("gt", require("telescope.builtin").lsp_type_definitions, "[G]oto [T]ype definition")
 
-    map("<leader>cs", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-    map("<leader>cS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+    -- map("<leader>cs", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+    -- map("<leader>cS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+    -- TODO: modified
+    map("<leader>ct", function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
+    end, "Toggle inlay hints")
     map("K", vim.lsp.buf.hover, "Hover Documentation")
 
     map("<C-S-k>", vim.lsp.buf.signature_help, "Signature help") -- show
@@ -85,7 +41,6 @@ local function keymaps(event)
     -- word under your cursor when your cursor rests there for a little while.
     --    See `:help CursorHold` for information about when this is executed
     -- When you move your cursor, the highlights will be cleared (the second autocommand).
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
     if client and client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
             buffer = event.buf,
@@ -99,87 +54,87 @@ local function keymaps(event)
     end
 end
 
-local function setupMason()
-    local mason = require("mason")
-    mason.setup({
-        ui = {
-            border = "rounded",
-            icons = {
-                package_installed = "✓",
-                package_pending = "➜",
-                package_uninstalled = "✗",
-            },
-        },
-    })
-end
-
-local function setupServers(capabilities)
-    local ensure_installed = vim.tbl_keys(mason_servers or {})
-    -- local ensure_installed = { "clangd", "html", "cssls", "glsl_analyzer", "lua_ls" }
-    vim.list_extend(ensure_installed, {
-        "prettier", -- Used to format HTML, CSS, JS, etc.
-        "prettierd", -- Used to format HTML, CSS, JS, etc.
-        "stylua", -- Used to format lua code
-        "clang-format", -- Used to format C/C++ code
-        "shfmt", -- Used to format shell scripts
-        "shellcheck", -- Used to lint shell scripts
-        "cpplint",
-        "cmakelint",
-        "cmakelang",
-        "latexindent",
-        "vale",
-    })
-    require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-
-    require("mason-lspconfig").setup({
-        handlers = {
-            function(server_name)
-                local server = mason_servers[server_name] or {}
-                -- This handles overriding only values explicitly passed
-                -- by the server configuration above. Useful when disabling
-                -- certain features of an LSP (for example, turning off formatting for tsserver)
-                server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-                require("lspconfig")[server_name].setup(server)
-            end,
-        },
-    })
-    for server_name, server in pairs(other_servers) do
-        server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-        require("lspconfig")[server_name].setup(server)
-    end
-end
-
 return { -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
     -- event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     dependencies = {
         -- Automatically install LSPs and related tools to stdpath for neovim
-        "hrsh7th/cmp-nvim-lsp", -- completion
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
-        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        "saghen/blink.cmp",        -- ensure blink loads
+        "williamboman/mason.nvim", -- lsp, dap, ... installer
+        -- "hrsh7th/cmp-nvim-lsp", -- completion
+        -- "williamboman/mason-lspconfig.nvim",
+        -- "WhoIsSethDaniel/mason-tool-installer.nvim",
 
         -- Useful status updates for LSP.
-        -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
         { "j-hui/fidget.nvim", opts = {} },
+        {
+            "folke/lazydev.nvim",
+            ft = "lua", -- only load on lua files
+            opts = {
+                library = {
+                    -- See the configuration section for more details
+                    -- Load luvit types when the `vim.uv` word is found
+                    { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                    { plugins = { "nvim-dap-ui" }, types = true, }
+                },
+            },
+        },
     },
 
-    config = function()
-        defineDiagnosticSigns()
+    opts = {
+        servers = {
+            gdshader_lsp = {},
+            slangd = {
+                cmd = { "slangd" }
+            },
+            lua_ls = {},
+            clangd = {
+                cmd = { "clangd", "--offset-encoding=utf-16" },
+                on_attach = function(client, bufnr)
+                    -- Define the command only if clangd is attached
+                    vim.api.nvim_buf_set_keymap(
+                        bufnr,
+                        "n",
+                        "gh",
+                        "<cmd>ClangdSwitchSourceHeader<CR>",
+                        { noremap = true, silent = true }
+                    )
+                end,
+            },
+        },
+    },
+    config = function(_, opts)
+        -- defineDiagnosticSigns
+        local signs = { Error = " ", Warn = " ", Hint = "", Info = " " }
+        for type, icon in pairs(signs) do
+            local hl = "DiagnosticSign" .. type
+            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+        end
 
-        -- setup keymaps on attach
+        local mason = require("mason")
+        mason.setup({
+            ui = {
+                border = "rounded",
+                icons = {
+                    package_installed = "✓",
+                    package_pending = "➜",
+                    package_uninstalled = "✗",
+                },
+            },
+        })
+
+        local lspconfig = require("lspconfig")
+        for server, config in pairs(opts.servers) do
+            -- passing config.capabilities to blink.cmp merges with the capabilities in your
+            -- `opts[server].capabilities, if you've defined it
+            -- vim.lsp._set_defaults(client, bufnr)
+            config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+            lspconfig[server].setup(config)
+        end
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
             callback = keymaps,
         })
-
-        local capabilities = vim.tbl_deep_extend(
-            "force",
-            vim.lsp.protocol.make_client_capabilities(),
-            require("cmp_nvim_lsp").default_capabilities()
-        )
-
-        setupMason()
-        setupServers(capabilities)
     end,
 }
+-- }

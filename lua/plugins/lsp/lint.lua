@@ -11,7 +11,7 @@ return {
             -- cpp = { "cpplint" },
             cmake = { "cmakelint" },
             bash = { "shellcheck" },
-            gdscript = { "gdlint" },
+            -- gdscript = { "gdlint" },
         }
 
         local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })

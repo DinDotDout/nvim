@@ -7,25 +7,25 @@ return {
         conform.setup({
             formatters_by_ft = {
                 lua = { "stylua" },
-                json = { { "prettierd", "prettier" } },
-                markdown = { { "prettierd", "prettier" } },
-                rust = { "rustfmt" },
-                yaml = { "yamlfix" },
-                toml = { "taplo" },
-                css = { { "prettierd", "prettier" } },
-                scss = { { "prettierd", "prettier" } },
-                bash = { "shfmt" },
-                gdscript = { "gdformat" },
+                -- json = { { "prettierd", "prettier" } },
+                -- markdown = { { "prettierd", "prettier" } },
+                -- rust = { "rustfmt" },
+                -- yaml = { "yamlfix" },
+                -- toml = { "taplo" },
+                -- css = { { "prettierd", "prettier" } },
+                -- scss = { { "prettierd", "prettier" } },
+                -- bash = { "shfmt" },
+                -- gdscript = { "gdformat" },
                 cmake = { "cmakelang" },
                 cpp = { "clang-format" },
             },
         })
 
-        format_on_save = {
-            lsp_fallback = true,
-            async = false,
-            timout_ms = 500,
-        }
+        -- format_on_save = {
+        --     lsp_fallback = true,
+        --     async = false,
+        --     timout_ms = 500,
+        -- }
 
         vim.keymap.set({ "n", "v", "x" }, "<leader>cf", function()
             conform.format({

@@ -180,14 +180,15 @@ return {
         opts = {
             plugins = { spelling = true },
             defaults = {},
+            preset = "modern",
             spec = {
                 {
                     mode = { "n", "v" },
                     { "g", group = "goto" },
-                    { "]", group = "next" },
-                    { "[", group = "prev" },
+                    -- { "]", group = "next" },
+                    -- { "[", group = "prev" },
                     { "<leader>c", group = "code" },
-                    { "<leader>g", group = "Git" },
+                    { "<leader>g", group = "Git/p4v" },
                     { "<leader>t", group = "DAP" },
                     { "<leader>l", group = "lua/latex" },
                     { "<leader>a", group = "AI" },
@@ -196,7 +197,7 @@ return {
                     { "<leader>s", group = "search" },
                     { "<leader>u", group = "ui" },
                     { "<leader>w", group = "windows" },
-                    { "<leader>x", group = "diagnostics/quickfix" },
+                    { "<leader>x", group = "build" },
                 },
             },
         },

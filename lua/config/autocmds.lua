@@ -5,6 +5,23 @@ local function augroup(name)
 end
 
 autocmd({ "BufRead", "BufNewFile" }, {
+    group = augroup("auto hlsl filetype"),
+    pattern = { "*.dbx" },
+    callback = function()
+        vim.cmd("set filetype=cs")
+        vim.cmd("setlocal commentstring=//%s")
+    end,
+})
+autocmd({ "BufRead", "BufNewFile" }, {
+    group = augroup("auto hlsl filetype"),
+    pattern = { "*.hlsl" },
+    callback = function()
+        vim.cmd("set filetype=hlsl")
+        vim.cmd("setlocal commentstring=//%s")
+    end,
+})
+
+autocmd({ "BufRead", "BufNewFile" }, {
     group = augroup("auto gdshader filetype"),
     pattern = { "*.gdshader", "*.gdshaderinc" },
     callback = function()

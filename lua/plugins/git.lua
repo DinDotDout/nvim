@@ -114,27 +114,4 @@ return {
             )
         end,
     },
-    {
-        "lewis6991/gitsigns.nvim",
-        event = { "BufReadPost", "BufWritePost", "BufNewFile" },
-        opts = {
-            on_attach = function(buffer)
-                local gs = package.loaded.gitsigns
-                local function map(mode, l, r, desc)
-                    vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
-                end
-                map("n", "<leader>gb", function()
-                    gs.blame_line({ full = true })
-                end, "Blame Line")
-            end,
-            signs = {
-                add = { text = "" }, -- nf-fa-plus
-                change = { text = "" }, -- nf-fa-pencil
-                delete = { text = "" }, -- nf-fa-minus
-                topdelete = { text = " " }, -- nf-fa-minus
-                changedelete = { text = " " }, -- nf-fa-pencil
-                untracked = { text = " " }, -- nf-fa-question
-            },
-        },
-    },
 }

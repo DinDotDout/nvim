@@ -1,51 +1,20 @@
 return {
-    -- {
-    --     "christoomey/vim-tmux-navigator",
-    --     cmd = {
-    --         "TmuxNavigateLeft",
-    --         "TmuxNavigateDown",
-    --         "TmuxNavigateUp",
-    --         "TmuxNavigateRight",
-    --     },
-    --     keys = {
-    --         { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-    --         { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-    --         { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-    --         { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-    --         -- { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
-    --     },
-    -- },
     {
-        "ThePrimeagen/vim-be-good",
-        lazy = true,
+        "folke/zen-mode.nvim",
+        config = function()
+            vim.api.nvim_set_keymap(
+                "n",
+                "<leader>z",
+                "<cmd>ZenMode<cr>",
+                { noremap = true, silent = true, desc = "center buffer" }
+            )
+        end,
     },
-
-    { -- Centers current buffer
-        "shortcuts/no-neck-pain.nvim",
-        opts = {
-            width = 150,
-            buffers = {
-                -- colors = {
-                -- blend = 0.1,
-                -- },
-            },
-        },
-        keys = { { "<leader>z", "<cmd>NoNeckPain<CR>", desc = "Center buffer" } },
-    },
-
     { -- Shows hex colors
         "norcalli/nvim-colorizer.lua",
         lazy = false,
         opts = { "rasi", "json", "toml", "yaml", "yml", "lua", "css", "conf" },
     },
-
-    -- {
-    --     "echasnovski/mini.indentscope",
-    --     opts = {
-    --         symbol = "┃",
-    --         options = { try_as_border = true },
-    --     },
-    -- },
 
     {
         "lukas-reineke/indent-blankline.nvim",
