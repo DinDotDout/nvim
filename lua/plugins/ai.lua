@@ -27,19 +27,19 @@ return {
         keys = {
             {
                 "<leader>at",
-                ":CopilotChatToggle<cr>",
-                mode = { "n" },
+                "<cmd>CopilotChatToggle<cr>",
+                mode = { "n", "v", "x" },
                 desc = "CopilotChat - Toggle",
             },
             {
                 "<leader>as",
-                ":CopilotChatStop<cr>",
+                "<cmd>CopilotChatStop<cr>",
                 mode = { "n" },
                 desc = "CopilotChat - Stop Answering",
             },
             {
                 "<leader>am",
-                ":CopilotChatCommitStaged<cr>",
+                "<cmd>CopilotChatCommitStaged<cr>",
                 mode = { "n" },
                 desc = "CopilotChat - Write commit message",
             },
