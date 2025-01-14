@@ -48,7 +48,7 @@ return {
                 "<leader>xr",
                 mode = { "n", "v" },
                 "<cmd>Task start cmake run<cr>",
-                desc = "Cmake build",
+                desc = "Cmake run",
             },
             {
                 "<leader>xb",
