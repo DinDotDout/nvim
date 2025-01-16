@@ -1,9 +1,25 @@
 M = {}
+function get_oil_entry_path(line)
+    local oil = require("oil")
+    local entry
+    if line then
+        entry = oil.get_entry_on_line(0, line)
+    else
+        entry = oil.get_cursor_entry()
+    end
+    if not entry then return "" end
+
+    if entry.name == ".." then
+        vim.notify("No file or directory selected", vim.log.levels.WARN)
+        return
+    end
+    return entry.name
+end
 
 local function get_selected_oil_entries(start_line, end_line)
     local paths = {}
     for l = start_line, end_line do
-        local path = M.get_oil_entry_path(l)
+        local path = get_oil_entry_path(l)
         if path then
             table.insert(paths, vim.fn.fnameescape(path))
         end
@@ -118,6 +134,7 @@ M.get_selected_line_indices = function()
     end
     return start_line, end_line
 end
+
 M.get_oil_entry_path = function(line)
     local oil = require("oil")
     local entry
@@ -132,7 +149,9 @@ M.get_oil_entry_path = function(line)
         vim.notify("No file or directory selected", vim.log.levels.WARN)
         return
     end
-    return entry.name
+
+    local path = oil.get_current_dir(vim.api.nvim_get_current_buf())
+    return path..entry.name
 end
 
 M.compress_file_and_copy_to_clipboard = function()
