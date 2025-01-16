@@ -1,6 +1,7 @@
 return {
     {
         "rcarriga/nvim-dap-ui",
+        lazy = true,
         dependencies = {
             "mfussenegger/nvim-dap",
             "nvim-neotest/nvim-nio",
@@ -25,7 +26,7 @@ return {
                 { desc = "Toggle DAP UI" }, opts
 
             )
-            vim.keymap.set( "n",
+            vim.keymap.set("n",
                 "<leader>?",
                 function()
                     require("dapui").eval(nil, { enter = true })
@@ -43,13 +44,13 @@ return {
             vim.keymap.set("n", "<leader>te",
                 function()
                     local index = tonumber(vim.fn.input("Enter index of expression to remove: "))
-                    require("dapui").elements.watches.edit(index)
+                    require("dapui").elements.watches.edit(index, "test")
                 end, { desc = "Edit watches" }
             )
         end
     },
     {
-        "mfussenegger/nvim-dap",
+        "mfussenegger/nvim-dap", -- Must be first to load to have everything configured
         dependencies = {
             -- Runs preLaunchTask / postDebugTask if present
             -- { "stevearc/overseer.nvim", config = true },
@@ -62,8 +63,20 @@ return {
                 end,
             },
             "rcarriga/nvim-dap-ui",
-            "williamboman/mason.nvim",
+            {
+                "jay-babu/mason-nvim-dap.nvim", -- Predefined config to run for installed handlers
+                dependencies = { "williamboman/mason.nvim" },
+                opts = {
+                    handlers = {},
+                    enssure_installed = {
+                        "codelldb",
+                        -- "cppdbg",
+                    },
+                },
+            },
+
         },
+        lazy = true,
         keys = {
             {
                 "<leader>ts",
@@ -107,6 +120,7 @@ return {
             { "<F3>",       "<CMD>DapStepOut<CR>",          desc = "Step Out" },
         },
         config = function()
+
             -- It appears that codelldb works as cpp tools for now, keep cpptools?
             -- Signs
             -- require('telescope').load_extension('dap')
@@ -126,6 +140,35 @@ return {
             dap.listeners.before.launch.dapui_config = function()
                 dapui.open()
             end
+
+            dap.listeners.before.event_terminated["dapui_config"] = function()
+                dapui.close()
+            end
+            dap.listeners.before.event_exited["dapui_config"] = function()
+                dapui.close()
+            end
+            local cppconfig = {
+                name = "Launch file",
+                type = "codelldb",
+                request = "launch",
+                program = function()
+                    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                end,
+                cwd = '${workspaceFolder}',
+                stopOnEntry = true,
+                setupCommands = {
+                    {
+                        text = '-enable-pretty-printing',
+                        description = 'enable pretty printing',
+                        ignoreFailures = false
+                    },
+                },
+            }
+
+            dap.configurations.cpp = {
+                cppconfig,
+                -- run_this,
+            }
         end,
     },
 }
