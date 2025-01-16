@@ -1,15 +1,35 @@
 return {
     {
-        "folke/zen-mode.nvim",
-        config = function()
-            vim.api.nvim_set_keymap(
-                "n",
-                "<leader>z",
-                "<cmd>ZenMode<cr>",
-                { noremap = true, silent = true, desc = "center buffer" }
-            )
-        end,
-    },
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        ---@type snacks.Config
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+            input = { enabled = true },
+            notifier = { enabled = true },
+            quickfile = { enabled = true },
+            statuscolumn = { enabled = true },
+            words = { enabled = true },
+        },
+    }, {
+    "folke/zen-mode.nvim",
+    config = function()
+        require("zen-mode").setup {
+            window = {
+                width = 150, -- Adjust the width as needed
+            }
+        }
+        vim.api.nvim_set_keymap(
+            "n",
+            "<leader>z",
+            "<cmd>ZenMode<cr>",
+            { noremap = true, silent = true, desc = "center buffer" }
+        )
+    end,
+},
     { -- Shows hex colors
         "norcalli/nvim-colorizer.lua",
         lazy = false,
