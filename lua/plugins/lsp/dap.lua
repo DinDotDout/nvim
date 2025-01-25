@@ -70,7 +70,8 @@ return {
                     handlers = {},
                     enssure_installed = {
                         "codelldb",
-                        -- "cppdbg",
+                        "cppdbg",
+                        "cpptools"
                     },
                 },
             },
@@ -120,7 +121,6 @@ return {
             { "<F3>",       "<CMD>DapStepOut<CR>",          desc = "Step Out" },
         },
         config = function()
-
             -- It appears that codelldb works as cpp tools for now, keep cpptools?
             -- Signs
             -- require('telescope').load_extension('dap')
@@ -147,7 +147,24 @@ return {
             dap.listeners.before.event_exited["dapui_config"] = function()
                 dapui.close()
             end
-            local cppconfig = {
+            local cppdbg = {
+                name = "Launch file",
+                type = "cppdbg",
+                request = "launch",
+                program = function()
+                    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                end,
+                cwd = '${workspaceFolder}',
+                stopOnEntry = true,
+                setupCommands = {
+                    {
+                        text = '-enable-pretty-printing',
+                        description = 'enable pretty printing',
+                        ignoreFailures = false
+                    },
+                },
+            }
+            local lldb = {
                 name = "Launch file",
                 type = "codelldb",
                 request = "launch",
@@ -166,8 +183,8 @@ return {
             }
 
             dap.configurations.cpp = {
-                cppconfig,
-                -- run_this,
+                lldb,
+                cppdbg,
             }
         end,
     },
