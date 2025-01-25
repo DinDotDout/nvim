@@ -1,5 +1,5 @@
 M = {}
-function get_oil_entry_path(line)
+local function get_oil_entry_path(line)
     local oil = require("oil")
     local entry
     if line then

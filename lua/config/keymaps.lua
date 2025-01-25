@@ -18,7 +18,7 @@ keymap("n", "<C-/>", "gcc", { remap = true }, { desc = "Comment Line" })
 keymap("x", "<C-/>", "gc", { remap = true }, { desc = "Comment Line" })
 
 -- Macro keybinds and unbind Q
-keymap("n", "Q", "@qj", { desc = "Execute 'q' macro and jump down" }, opts) -- Execute macro and jump down
+keymap("n", "Q", "@q", { desc = "Execute 'q' macro and jump down" }, opts) -- Execute macro and jump down
 keymap("x", "Q", ":norm @q<CR>", { desc = "Execute 'q' macro on selection" }, opts) -- Execute macro on selection
 
 local path_commands = require("plugins.custom.clipboard-oil-commands")
@@ -202,5 +202,7 @@ local function copy_buffer_path_to_clipboard()
         vim.notify("Path copied to clipboard: " .. curr_path, vim.log.levels.INFO)
     end
 end
+
+
 
 vim.keymap.set("n", "<M-c>", copy_buffer_path_to_clipboard, { desc = "Copy path to clipboard", noremap = true, silent = true })

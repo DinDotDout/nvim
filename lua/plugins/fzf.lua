@@ -227,7 +227,7 @@ return {
             -- { "<leader>sW",      LazyVim.pick("grep_cword", { root = false }),               desc = "Word (cwd)" },
             { "<leader>sv", "<cmd>FzfLua grep_visual<cr>",                                mode = "v",                       desc = "Selection (Root Dir)" },
             -- { "<leader>sW",      LazyVim.pick("grep_visual", { root = false }),              mode = "v",                       desc = "Selection (cwd)" },
-            { "<leader>sC", "<cmd>FzfLua colorschemes",                                   desc = "Colorscheme with Preview" },
+            { "<leader>sC", "<cmd>FzfLua colorschemes<cr>",                                   desc = "Colorscheme with Preview" },
             -- { '<leader>fc', find_files_by_type,                              desc = "Find Files by Type" },
             -- { '<leader>sc', search_files_by_type,                            desc = "Find Files by Type" },
             {
