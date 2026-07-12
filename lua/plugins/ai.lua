@@ -14,15 +14,17 @@ return {
             disable_extra_info = "yes", -- Disable extra information (e.g: system prompt) in the response.
             window = { layout = "float" },
             auto_follow_cursor = false,
+            model = 'gpt-5-mini'
             -- proxy = "socks5://127.0.0.1:3000", -- Proxies requests via https or socks.
         },
         dependencies = {
             { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
             { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
         },
-        build = function()
-            vim.notify("Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim.")
-        end,
+        -- build = "make tiktoken",
+        -- build = function()
+        --     vim.notify("Please update the remote plugins by running ':UpdateRemotePlugins', then restart Neovim.")
+        -- end,
         event = "VeryLazy",
         keys = {
             {
@@ -79,4 +81,44 @@ return {
             -- },
         },
     },
+{
+    "olimorris/codecompanion.nvim",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+        log_level = "DEBUG",
+        -- interactions = {
+        --     chat = {
+        --         adapter = {
+        --             name = "copilot",
+        --             model = "copilot-chat-latest",
+        --         },
+        --     },
+        -- },
+        interactions = {
+            chat = {
+                adapter = {
+                    name = "openai",
+                    model = "gpt-4o-mini",
+                },
+            },
+        },
+    },
+    keys = {
+        {
+            "<leader>cc",
+            "<cmd>CodeCompanionChat Toggle<cr>",
+            mode = { "n", "v", "x" },
+            desc = "CodeCompanionChat - Toggle",
+        },
+        {
+            "<leader>cn",
+            "<cmd>CodeCompanionChat<cr>",
+            mode = { "n", "v", "x" },
+            desc = "CodeCompanionChat - new",
+        },
+    }
+}
 }

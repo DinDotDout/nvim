@@ -1,7 +1,7 @@
 return {
     "saghen/blink.cmp",
     dependencies = { "rafamadriz/friendly-snippets", "giuxtaposition/blink-cmp-copilot" },
-    version = "0.9.0",
+    version = "*",
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
@@ -10,10 +10,40 @@ return {
         -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
         -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
         -- See the full "keymap" documentation for information on defining your own keymap.
-        keymap = { preset = "default" },
+        keymap = {
+            preset = "default",
+            -- ['<Left>'] = {},
+            -- ['<Right>'] = {},
+            -- ['<Left>'] = function(fallback) fallback() end,
+            -- ['<Right>'] = { "cancel" },
+            -- function(fallback) fallback() end,
+            -- mapping = {
+            --     ['<Left>'] = function(fallback) fallback() end,
+            --     ['<Right>'] = function(fallback) fallback() end,
+            --     -- ...other mappings
+            -- }
+        },
         completion = {
-            menu = { border = "single" },
+            menu = { border = "single",
+            },
             documentation = { window = { border = "single" }, auto_show = true },
+        },
+        cmdline = {
+            keymap = {
+                preset = 'inherit',
+                ['<Left>'] = {},
+                ['<Right>'] = {},
+            },
+            completion = {
+                ghost_text = { enabled = false },
+                menu = { auto_show = true },
+                list = {
+                    selection = {
+                        preselect = true,
+                        auto_insert = true
+                    }
+                }
+            }
         },
         signature = { window = { border = "single" } },
         appearance = {
@@ -44,6 +74,7 @@ return {
                     score_offset = 100,
                     async = true,
                 },
+
             },
         },
     },

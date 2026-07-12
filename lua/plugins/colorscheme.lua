@@ -1,5 +1,14 @@
 return {
     {
+        "oskarnurm/koda.nvim",
+        lazy = false, -- make sure we load this during startup if it is your main colorscheme
+        priority = 999, -- make sure to load this before all the other start plugins
+        config = function()
+            -- require("koda").setup({ transparent = true })
+            vim.cmd("colorscheme koda")
+        end,
+    },
+    {
         "ellisonleao/gruvbox.nvim",
         name = "gruvbox",
         lazy = false,
@@ -8,6 +17,16 @@ return {
             -- vim.cmd([[colorscheme gruvbox]])
         end,
     },
+    -- {
+    --     'Everblush/nvim',
+    --     name = 'everblush',
+    --
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         vim.cmd('colorscheme everblush')
+    --     end,
+    -- },
     {
         "sainnhe/everforest",
         name = "everforest",
@@ -18,7 +37,32 @@ return {
             vim.g.background = "hard"
             vim.cmd([[colorscheme everforest]])
         end,
+    }, -- Lua
+
+    {
+        'olivercederborg/poimandres.nvim',
+        lazy = false,
+        priority = 1000,
+        config = function()
+            -- require('poimandres').setup {
+            -- leave this setup function empty for default config
+            -- or refer to the configuration section
+            -- for configuration options
+            -- }
+        end,
+
+        -- optionally set the colorscheme within lazy config
+        init = function()
+            vim.cmd("colorscheme poimandres")
+        end
     },
+    -- { 'Everblush/nvim', opts, {}, name = 'everblush' },
+    -- {
+    --     "folke/tokyonight.nvim",
+    --     lazy = false,
+    --     priority = 1000,
+    --     opts = {},
+    -- },
     -- {
     --     "catppuccin/nvim",
     --     lazy = true,

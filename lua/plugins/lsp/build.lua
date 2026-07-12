@@ -5,7 +5,12 @@ return {
         "Shatur/neovim-tasks",
         dependencies = {
             "mfussenegger/nvim-dap", -- Must be first to load to have everything configured
+            "theHamsta/nvim-dap-virtual-text",
         },
+        cond = function()
+            local root = vim.fn.getcwd()
+            return vim.fn.filereadable(root .. "/CMakeLists.txt") == 1
+        end,
         lazy = true,
         config = function()
             local Path = require("plenary.path")
@@ -16,7 +21,7 @@ return {
                         build_dir = tostring(Path:new("{cwd}", "build", "{os}-{build_type}")), -- Build directory. The expressions `{cwd}`, `{os}` and `{build_type}` will be expanded with the corresponding text values. Could be a function that return the path to the build directory.
                         build_type = "Debug",                                                  -- Build type, can be changed using `:Task set_module_param cmake build_type`.
                         -- dap_name = "codelldb",                                                 -- DAP configuration name from `require('dap').configurations`. If there is no such configuration, a new one with this name as `type` will be created.
-                        dap_name = "cppdbg",                                                 -- DAP configuration name from `require('dap').configurations`. If there is no such configuration, a new one with this name as `type` will be created.
+                        dap_name = "cppdbg",                                                   -- DAP configuration name from `require('dap').configurations`. If there is no such configuration, a new one with this name as `type` will be created.
                         args = {                                                               -- Task default arguments.
                             configure = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1", "-G", "Ninja" },
                         },
@@ -25,8 +30,10 @@ return {
                 -- save_before_run = true, -- If true, all files will be saved before executing a task.
                 params_file = "neovim-tasks.json", -- JSON file to store module and task parameters.
                 quickfix = {
-                    pos = "bot",                   -- Default quickfix position.
-                    height = 12,                   -- Default height.
+                    -- pos = "bot",                   -- Default quickfix position.
+                    height = 120, -- Default height.
+                    pos = "vert", -- Default quickfix position.
+                    -- width = 40,
                 },
                 dap_open_command = function()
                 end,
@@ -46,16 +53,26 @@ return {
                 desc = "Rerun cmake configure",
             },
             {
-                "<leader>xc",
+                "<leader>xx",
                 mode = { "n", "v" },
-                "<cmd>Task cancel<cr>",
+                function()
+                    require("tasks").cancel()
+                    require("nvim-dap-virtual-text").disable()
+                end,
+                -- "<cmd>Task cancel<cr>",
                 desc = "Cancel task",
             },
             {
                 "<leader>xr",
                 mode = { "n", "v" },
                 "<cmd>Task start cmake run<cr>",
-                desc = "Cmake run",
+                desc = "Cmake build and run",
+            },
+            {
+                "<S-b>",
+                mode = { "n", "v" },
+                "<cmd>Task start cmake build<cr>",
+                desc = "Cmake build",
             },
             {
                 "<leader>xb",

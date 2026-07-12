@@ -1,10 +1,18 @@
 return {
+    -- { "paretje/nvim-man" },
     {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
         ---@type snacks.Config
         opts = {
+            styles = {
+                input = {
+                    b = {
+                        completion = true, -- disable blink completions in input
+                    },
+                }
+            },
             -- your configuration comes here
             -- or leave it empty to use the default settings
             -- refer to the configuration section below
@@ -19,7 +27,7 @@ return {
     config = function()
         require("zen-mode").setup {
             window = {
-                width = 150, -- Adjust the width as needed
+                width = 200, -- Adjust the width as needed
             }
         }
         vim.api.nvim_set_keymap(

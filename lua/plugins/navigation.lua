@@ -1,4 +1,53 @@
+local theme = {
+  fill = 'TabLineFill',
+  -- Also you can do this: fill = { fg='#f2e9de', bg='#907aa9', style='italic' }
+  head = 'TabLine',
+  current_tab = 'TabLineSel',
+  tab = 'TabLine',
+  win = 'TabLine',
+  tail = 'TabLine',
+}
 return {
+    {
+        "nanozuki/tabby.nvim",
+        opts = {
+            line = function(line)
+                return {
+                    {
+                        { '  ', hl = theme.head },
+                        line.sep('', theme.head, theme.fill),
+                    },
+                    line.tabs().foreach(function(tab)
+                        local hl = tab.is_current() and theme.current_tab or theme.tab
+                        return {
+                            line.sep('', hl, theme.fill),
+                            tab.number(),
+                            tab.name(),
+                            line.sep('', hl, theme.fill),
+                            hl = hl,
+                            margin = ' ',
+                        }
+                    end),
+                    line.spacer(),
+                    line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+                        return {
+                            line.sep('', theme.win, theme.fill),
+                            win.is_current() and '' or '',
+                            win.buf_name(),
+                            line.sep('', theme.win, theme.fill),
+                            hl = theme.win,
+                            margin = ' ',
+                        }
+                    end),
+                    {
+                        line.sep('', theme.tail, theme.fill),
+                        { '  ', hl = theme.tail },
+                    },
+                    hl = theme.fill,
+                }
+            end,
+        },
+    },
     {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
@@ -51,9 +100,6 @@ return {
         dependencies = { "nvim-tree/nvim-web-devicons" },
         lazy = false,
         opts = {
-            view_options = {
-                show_hidden = true,
-            },
             default_file_explorer = true,
             keymaps = {
                 ["<esc>"] = { "actions.close", desc = "Close" },
@@ -65,6 +111,9 @@ return {
                 ["<C-h>"] = { "<cmd>wincmd h<cr>", desc = "" },
                 ["<C-l>"] = { "<cmd>wincmd l<cr>", desc = "" },
             },
+            view_options = {
+                show_hidden = true,
+            },
         },
         keys = {
             { "<leader>e", "<cmd>Oil<CR>",   desc = "Open file explorer" },
@@ -74,11 +123,15 @@ return {
             local oil = require("oil")
             local oil_custom_commands = require("plugins.custom.clipboard-oil-commands")
             oil.setup({
+                default_file_explorer = true,
+                view_options = {
+                    show_hidden = false,
+                },
                 keymaps = {
                     -- ["<esc>"] = { "actions.close", desc = "Close" },
                     ["<leader>e"] = { "actions.close", desc = "Close" },
                     ["<leader>oe"] = { "actions.open_external", desc = "Open external program" },
-                    ["<leader>tt"] = { "actions.toggle_trash", desc = "Toggle trash" },
+                    ["<leader>ot"] = { "actions.toggle_trash", desc = "Toggle trash" },
                     ["q"] = { "actions.close", desc = "Close" },
                     ["<C-h>"] = { "<cmd>wincmd h<cr>", desc = "Go to right split" },
                     ["<C-l>"] = { "<cmd>wincmd l<cr>", desc = "Go to left split" },

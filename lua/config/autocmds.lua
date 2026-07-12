@@ -4,6 +4,22 @@ local function augroup(name)
     return vim.api.nvim_create_augroup(name, { clear = true })
 end
 
+-- vim.api.nvim_create_autocmd("FileType", {
+--     group = augroup("cpp comments"),
+--     pattern = "cpp",
+--     callback = function()
+--         vim.bo.commentstring = "// %s"
+--     end,
+-- })
+
+vim.api.nvim_create_autocmd("OptionSet", {
+    group = augroup("cpp comments"),
+    pattern = "commentstring",
+    callback = function()
+        print("commentstring changed to: " .. vim.bo.commentstring)
+    end,
+})
+
 autocmd({ "BufRead", "BufNewFile" }, {
     group = augroup("auto hlsl filetype"),
     pattern = { "*.dbx" },
@@ -79,36 +95,36 @@ autocmd({ "BufRead", "BufNewFile" }, {
 -- })
 
 -- Autocmd for lualine
-autocmd("RecordingEnter", {
-    group = augroup("lualine update"),
-    callback = function()
-        require("lualine").refresh({
-            place = { "statusline" },
-        })
-    end,
-})
-
-autocmd("RecordingLeave", {
-    group = augroup("lualine timer update"),
-    callback = function()
-        -- This is going to seem really weird!
-        -- Instead of just calling refresh we need to wait a moment because of the nature of
-        -- `vim.fn.reg_recording`. If we tell lualine to refresh right now it actually will
-        -- still show a recording occuring because `vim.fn.reg_recording` hasn't emptied yet.
-        -- So what we need to do is wait a tiny amount of time (in this instance 50 ms) to
-        -- ensure `vim.fn.reg_recording` is purged before asking lualine to refresh.
-        local timer = vim.loop.new_timer()
-        timer:start(
-            50,
-            0,
-            vim.schedule_wrap(function()
-                require("lualine").refresh({
-                    place = { "statusline" },
-                })
-            end)
-        )
-    end,
-})
+-- autocmd("RecordingEnter", {
+--     group = augroup("lualine update"),
+--     callback = function()
+--         require("lualine").refresh({
+--             place = { "statusline" },
+--         })
+--     end,
+-- })
+--
+-- autocmd("RecordingLeave", {
+--     group = augroup("lualine timer update"),
+--     callback = function()
+--         -- This is going to seem really weird!
+--         -- Instead of just calling refresh we need to wait a moment because of the nature of
+--         -- `vim.fn.reg_recording`. If we tell lualine to refresh right now it actually will
+--         -- still show a recording occuring because `vim.fn.reg_recording` hasn't emptied yet.
+--         -- So what we need to do is wait a tiny amount of time (in this instance 50 ms) to
+--         -- ensure `vim.fn.reg_recording` is purged before asking lualine to refresh.
+--         local timer = vim.loop.new_timer()
+--         timer:start(
+--             50,
+--             0,
+--             vim.schedule_wrap(function()
+--                 require("lualine").refresh({
+--                     place = { "statusline" },
+--                 })
+--             end)
+--         )
+--     end,
+-- })
 
 -- Lazyvim sane defaults
 -- Check if we need to reload the file when it changed

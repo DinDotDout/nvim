@@ -1,6 +1,7 @@
 return {
     { "mg979/vim-visual-multi" },
-    { "kevinhwang91/nvim-bqf", otps = {} },
+    {"https://github.com/stevearc/quicker.nvim", opts = {}},
+    { "kevinhwang91/nvim-bqf", opts = {} },
     {
         -- opt.shell = 'C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe'
 
